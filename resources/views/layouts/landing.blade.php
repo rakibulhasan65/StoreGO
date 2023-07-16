@@ -788,21 +788,72 @@
         </div>
     </section>
     <!-- [ dashboard ] End -->
-    
+
     <!-- [ whatsapp_plugin ] Start -->
-    <section class="whatsapp_plugin">
-      <div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:10px;right:15px">
+    <div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:10px;right:15px;">
         <a href="https://wa.me/+8801763155595?text=Hello">
             <img src="{{ asset('assets/img/whatsapp.png') }}" alt="whatsapp" style="width: 60px;height:60px;" />
         </a>
     </div>
-    </section>
     <!-- [ whatsapp_plugin ] End -->
+
+
+
+
+    {{-- <div class="adobeExpressIntregrate">
+      <button id="edit-project-button">Edit project</button>
+    <img id="image-container" height="420" width="420" src="{{ asset('landing/images/storego-saas-pic-6.png') }}" />
+    </div> --}}
+
 
     <!-- Required Js -->
     <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/wow.min.js') }}"></script>
+
+    <script src="https://sdk.cc-embed.adobe.com/v2/CCEverywhere.js"></script>
+
+    {{-- <script type="text/javascript">
+
+    (async () => {
+        const ccEverywhere = await window.CCEverywhere.initialize({
+            clientId: 'd3027becf4054ac6bdc3224f4d32cab9',
+            appName: 'appTest',
+            appVersion: { major: 1, minor: 0 },
+            platformCategory: 'web', 
+        });
+
+        // projectId should be saved from an earlier call to createDesign
+        var projectId = 'd3027becf4054ac6bdc3224f4d32cab9';
+        var imageContainer = document.getElementById("image-container");
+        const editButton = document.getElementById("edit-project-button");
+        
+        editButton.addEventListener('click', () => {
+            const editDesignCallback = {
+                onCancel: () => {},
+                onPublish: (publishParams) => {
+                    const localData = { project: publishParams.projectId, image: publishParams.asset.data };
+                    imageContainer.src = localData.image;
+                    projectId = localData.project;
+                },
+                onError: (err) => {
+                    console.error('Error received is', err.toString());
+                },
+            };
+            ccEverywhere.editDesign(
+                {
+                    inputParams: { projectId: projectId },
+                    callbacks: editDesignCallback
+                }
+            );
+        });
+    })();    
+    </script> --}}
+
+
+    {{-- Adobe Express Intregrate End --}}
+
+
     <script>
         // Start [ Menu hide/show on scroll ]
         let ost = 0;

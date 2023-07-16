@@ -46,6 +46,7 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['XSS']);
 
 Route::get('login/{lang?}', function () {

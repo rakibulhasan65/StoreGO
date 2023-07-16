@@ -754,18 +754,33 @@
     </section>
     <!-- [ dashboard ] End -->
 
-    <section class="whatsapp_plugin">
-      <div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:10px;right:15px">
+    <!-- [ whatsapp_plugin ] Start -->
+    <div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:10px;right:15px;">
         <a href="https://wa.me/+8801763155595?text=Hello">
             <img src="<?php echo e(asset('assets/img/whatsapp.png')); ?>" alt="whatsapp" style="width: 60px;height:60px;" />
         </a>
     </div>
-    </section>
+    <!-- [ whatsapp_plugin ] End -->
+
+
+
+
+    
+
 
     <!-- Required Js -->
     <script src="<?php echo e(asset('assets/js/plugins/popper.min.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/plugins/bootstrap.min.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/pages/wow.min.js')); ?>"></script>
+
+    <script src="https://sdk.cc-embed.adobe.com/v2/CCEverywhere.js"></script>
+
+    
+
+
+    
+
+
     <script>
         // Start [ Menu hide/show on scroll ]
         let ost = 0;
