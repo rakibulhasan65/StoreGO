@@ -51,17 +51,18 @@ class RegisteredUserController extends Controller
             return abort('404', 'Page not found');
         }
     }
+
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        if(Utility::getValByName('email_verification') == 'on'){
+        if (Utility::getValByName('email_verification') == 'on') {
             if (env('RECAPTCHA_MODULE') == 'yes') {
                 $validation['g-recaptcha-response'] = 'required|captcha';
             } else {
@@ -72,7 +73,7 @@ class RegisteredUserController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'store_name'=>'required|max:255',
+                'store_name' => 'required|max:255',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
@@ -99,7 +100,7 @@ class RegisteredUserController extends Controller
                 ]
             );
             $objStore->enable_storelink = 'on';
-            $objStore->content          =   'Hi,
+            $objStore->content = 'Hi,
                                             *Welcome to* {store_name},
                                             Your order is confirmed & your order no. is {order_no}
                                             Your order detail is:
@@ -118,13 +119,13 @@ class RegisteredUserController extends Controller
                                             To collect the order you need to show the receipt at the counter.
                                             Thanks {store_name}';
 
-            $objStore->item_variable    = '{sku} : {quantity} x {product_name} - {variant_name} + {item_tax} = {item_total}';
-            $objStore->theme_dir        = 'theme1';
-            $objStore->store_theme      = 'theme1-v1';
+            $objStore->item_variable = '{sku} : {quantity} x {product_name} - {variant_name} + {item_tax} = {item_total}';
+            $objStore->theme_dir = 'theme1';
+            $objStore->store_theme = 'theme1-v1';
             $objStore->save();
 
             $objUser->current_store = $objStore->id;
-            $objUser->plan          = Plan::first()->id;
+            $objUser->plan = Plan::first()->id;
             $objUser->assignRole('Owner');
             $objUser->save();
             UserStore::create(
@@ -134,7 +135,7 @@ class RegisteredUserController extends Controller
                     'permission' => 'Owner',
                 ]
             );
-        
+
             try {
                 event(new Registered($objUser));
 
@@ -146,8 +147,7 @@ class RegisteredUserController extends Controller
                 return redirect('/register/lang?')->with('status', __('Email SMTP settings does not configure so please contact to your site admin.'));
             }
             return redirect(RouteServiceProvider::HOME);
-        }
-        else{
+        } else {
             if (env('RECAPTCHA_MODULE') == 'yes') {
                 $validation['g-recaptcha-response'] = 'required|captcha';
             } else {
@@ -158,7 +158,7 @@ class RegisteredUserController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'store_name'=>'required|max:255',
+                'store_name' => 'required|max:255',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
@@ -186,7 +186,7 @@ class RegisteredUserController extends Controller
                 ]
             );
             $objStore->enable_storelink = 'on';
-            $objStore->content          =   'Hi,
+            $objStore->content = 'Hi,
                                             *Welcome to* {store_name},
                                             Your order is confirmed & your order no. is {order_no}
                                             Your order detail is:
@@ -205,13 +205,13 @@ class RegisteredUserController extends Controller
                                             To collect the order you need to show the receipt at the counter.
                                             Thanks {store_name}';
 
-            $objStore->item_variable    = '{sku} : {quantity} x {product_name} - {variant_name} + {item_tax} = {item_total}';
-            $objStore->theme_dir        = 'theme1';
-            $objStore->store_theme      = 'theme1-v1';
+            $objStore->item_variable = '{sku} : {quantity} x {product_name} - {variant_name} + {item_tax} = {item_total}';
+            $objStore->theme_dir = 'theme1';
+            $objStore->store_theme = 'theme1-v1';
             $objStore->save();
 
             $objUser->current_store = $objStore->id;
-            $objUser->plan          = Plan::first()->id;
+            $objUser->plan = Plan::first()->id;
             $objUser->assignRole('Owner');
             $objUser->save();
             UserStore::create(
@@ -233,6 +233,6 @@ class RegisteredUserController extends Controller
             //     return redirect('/register/lang?')->with('status', __('Email SMTP settings does not configure so please contact to your site admin.'));
             // }
         }
-               
+
     }
 }

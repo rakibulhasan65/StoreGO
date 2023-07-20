@@ -21,6 +21,17 @@ return [
         'scheme' => 'https',
     ],
 
+    'google' => [
+        'client_id' => "350882793922-fk9tef811vg92s21htsbbbd0l54h99ko.apps.googleusercontent.com",
+        'client_secret' => "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",
+        'redirect' => "http://127.0.0.1:8000/login/gotogooglestore",
+    ],
+    'linkedin' => [
+        'client_id' => "8606kjdjtv8kbv",
+        'client_secret' => "RHnHD39RZY4pZKBV",
+        'redirect' => "http://127.0.0.1:8000/login/gotolinkedinstore",
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

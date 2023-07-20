@@ -15,7 +15,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ToyyibpayController;
 use App\Http\Controllers\PlanController;
-Use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlanRequestController;
 use App\Http\Controllers\ProductCategorieController;
 use App\Http\Controllers\ProductController;
@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\SocialiteLogin;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,53 +48,60 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
  */
+//started with Socialite Google
+Route::get('/login/gotogoogle', [SocialiteLogin::class, 'goToGoogle'])->name('goToGoogle');
+Route::get('/login/gotogooglestore', [SocialiteLogin::class, 'goToGoogleStore'])->name('goToGoogleStore');
+
+//started with Socialite linkedin
+
+Route::get('/login/gotolinkedin', [SocialiteLogin::class, 'goToLinkedin'])->name('goToLinkedin');
+Route::get('/login/gotolinkedinstore', [SocialiteLogin::class, 'goToLinkedinStore'])->name('goToLinkedinStore');
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['XSS']);
 
 Route::get('login/{lang?}', function () {
 
-    $url = \Request::url(); 
-    $app_url=env('APP_URL');
+    $url = \Request::url();
+    $app_url = env('APP_URL');
 
-    $urlExp=explode('/',$url);
-    $finalUrl=$urlExp[2];
-    $login=$urlExp[3];
-    
-    $app_urlExp=explode('/',$app_url);
-    $finalappUrl=$app_urlExp[2];
-    
-    
-   if(($finalUrl!=$finalappUrl) && $login=='login'){
-       
-          $local = parse_url(config('app.url'))['host'];
+    $urlExp = explode('/', $url);
+    $finalUrl = $urlExp[2];
+    $login = $urlExp[3];
 
-          $remote = request()->getHost();
-        
-          $remote = str_replace('www.', '', $remote);
+    $app_urlExp = explode('/', $app_url);
+    $finalappUrl = $app_urlExp[2];
 
-          $domain_store = App\Models\Store::where('domains', '=', $remote)->where('enable_domain', 'on')->first();
-          $sub_store = App\Models\Store::where('subdomain', '=', $remote)->where('enable_subdomain', 'on')->first();
-        
-          if(!empty($domain_store)){
-              $slug=$domain_store->slug;
-                return redirect()->route('customer.loginform',$slug);
-          }
-            if(!empty($sub_store)){
-              $slug=$sub_store->slug;
-                return redirect()->route('customer.loginform',$slug);
-          }
-          
-      return Redirect::to($app_url);
-        
-   }
 
-   $lang='en';
+    if (($finalUrl != $finalappUrl) && $login == 'login') {
+
+        $local = parse_url(config('app.url'))['host'];
+
+        $remote = request()->getHost();
+
+        $remote = str_replace('www.', '', $remote);
+
+        $domain_store = App\Models\Store::where('domains', '=', $remote)->where('enable_domain', 'on')->first();
+        $sub_store = App\Models\Store::where('subdomain', '=', $remote)->where('enable_subdomain', 'on')->first();
+
+        if (!empty($domain_store)) {
+            $slug = $domain_store->slug;
+            return redirect()->route('customer.loginform', $slug);
+        }
+        if (!empty($sub_store)) {
+            $slug = $sub_store->slug;
+            return redirect()->route('customer.loginform', $slug);
+        }
+
+        return Redirect::to($app_url);
+
+    }
+
+    $lang = 'en';
     return view('auth.login', compact('lang'));
 
 
- })->name('login');
+})->name('login');
 require __DIR__ . '/auth.php';
-
 
 
 Route::group(['middleware' => ['verified']], function () {
@@ -106,7 +115,7 @@ Route::group(['middleware' => ['verified']], function () {
     // product
     Route::resource('product', ProductController::class)->middleware(['auth', 'XSS']);
     Route::post('product/store', [ProductController::class, 'store'])->name('product.store')->middleware(['auth']);
-    Route::post('product/{id}/update', [ProductController::class,'productUpdate'])->name('products.update')->middleware('auth');
+    Route::post('product/{id}/update', [ProductController::class, 'productUpdate'])->name('products.update')->middleware('auth');
     // product tax
     Route::resource('product_tax', ProductTaxController::class)->middleware(['auth', 'XSS']);
 
@@ -129,8 +138,8 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::get('/plans', [PlanController::class, 'index'])->name('plans.index')->middleware(['auth', 'XSS']);
     Route::get('settings', [SettingController::class, 'index'])->name('settings');
-    Route::get('themes',[themeController::class,'index'])->name('themes.theme')->middleware(['auth','XSS']);
-    Route::post('pwa-settings/{id}',[StoreController::class,'pwasetting'])->name('setting.pwa')->middleware(['auth','XSS']);
+    Route::get('themes', [themeController::class, 'index'])->name('themes.theme')->middleware(['auth', 'XSS']);
+    Route::post('pwa-settings/{id}', [StoreController::class, 'pwasetting'])->name('setting.pwa')->middleware(['auth', 'XSS']);
     // Route::resource('store-resource', StoreController::class)->middleware(['auth', 'XSS']);
 
     Route::get('profile', [DashboardController::class, 'profile'])->name('profile')->middleware(['auth', 'XSS']);
@@ -193,10 +202,10 @@ Route::group(['middleware' => ['verified']], function () {
         Route::post('owner-payment-setting/{slug?}', [SettingController::class, 'saveOwnerPaymentSettings'])->name('owner.payment.setting');
         Route::post('owner-email-setting/{slug?}', [SettingController::class, 'saveOwneremailSettings'])->name('owner.email.setting');
         Route::post('owner-twilio-setting/{slug?}', [SettingController::class, 'saveOwnertwilioSettings'])->name('owner.twilio.setting');
-        Route::get('pixel-setting/create',[SettingController::class,'CreatePixel'])->name('owner.pixel.create');
-        Route::post('pixel-setting/{slug?}',[SettingController::class,'savePixelSettings'])->name('owner.pixel.setting');
-        Route::delete('pixel-delete/{id}',[SettingController::class,'pixelDelete'])->name('pixel.delete');
-        Route::any('/cookie-consent', [SettingController::class,'CookieConsent'])->name('cookie-consent'); 
+        Route::get('pixel-setting/create', [SettingController::class, 'CreatePixel'])->name('owner.pixel.create');
+        Route::post('pixel-setting/{slug?}', [SettingController::class, 'savePixelSettings'])->name('owner.pixel.setting');
+        Route::delete('pixel-delete/{id}', [SettingController::class, 'pixelDelete'])->name('pixel.delete');
+        Route::any('/cookie-consent', [SettingController::class, 'CookieConsent'])->name('cookie-consent');
         Route::post('cookie-setting', [SettingController::class, 'saveCookieSettings'])->name('cookie.setting');
     });
 
@@ -211,8 +220,8 @@ Route::group(['middleware' => ['verified']], function () {
     Route::resource('shipping', ShippingController::class)->middleware(['auth', 'XSS']);
 
     Route::resource('location', LocationController::class)->middleware(['auth', 'XSS']);
-    Route::resource('custom-page', PageOptionController::class)->middleware(['auth','Lang']);
-    Route::resource('blog', BlogController::class)->middleware(['auth','Lang']);
+    Route::resource('custom-page', PageOptionController::class)->middleware(['auth', 'Lang']);
+    Route::resource('blog', BlogController::class)->middleware(['auth', 'Lang']);
     Route::get('blog-social', [BlogController::class, 'socialBlog'])->name('blog.social')->middleware(['auth', 'XSS']);
     Route::post('store-social-blog', [BlogController::class, 'storeSocialblog'])->name('store.socialblog')->middleware(['auth', 'XSS']);
 
@@ -371,7 +380,7 @@ Route::post('user-product_qty/{slug?}/product/{id}/{variant_id?}', [StoreControl
 Route::post('customer/{slug}', [StoreController::class, 'customer'])->name('store.customer');
 Route::post('user-location/{slug}/location/{id}', [StoreController::class, 'UserLocation'])->name('user.location');
 Route::post('user-shipping/{slug}/shipping/{id}', [StoreController::class, 'UserShipping'])->name('user.shipping');
-Route::post('{slug}/user-city/{city}',[storecontroller::class,'userCity'])->name('user.city');
+Route::post('{slug}/user-city/{city}', [storecontroller::class, 'userCity'])->name('user.city');
 Route::post('save-rating/{slug?}', [StoreController::class, 'saverating'])->name('store.saverating');
 Route::delete('delete_cart_item/{slug?}/product/{id}/{variant_id?}', [StoreController::class, 'delete_cart_item'])->name('delete.cart_item');
 Route::delete('delete_wishlist_item/{slug?}/product/{id}/', [StoreController::class, 'delete_wishlist_item'])->name('delete.wishlist_item');
@@ -467,14 +476,14 @@ Route::put('{slug}/customer-profile/{id}', [CustomerLoginController::class, 'pro
 Route::put('{slug}/customer-profile-password/{id}', [CustomerLoginController::class, 'updatePassword'])->name('customer.profile.password')->middleware('customerauth');
 Route::post('{slug}/customer-logout', [CustomerLoginController::class, 'logout'])->name('customer.logout');
 
-Route::resource('roles', RoleController::class)->middleware(['auth','XSS']);
-Route::resource('users',UserController::class)->middleware(['auth','XSS']);
-Route::get('users/reset/{id}',[UserController::class,'reset'])->name('users.reset')->middleware(['auth','XSS']);
-Route::post('users/reset/{id}',[UserController::class,'updatePassword'])->name('users.resetpassword')->middleware(['auth','XSS']);
-Route::resource('permissions', PermissionController::class)->middleware(['auth','XSS',]);
+Route::resource('roles', RoleController::class)->middleware(['auth', 'XSS']);
+Route::resource('users', UserController::class)->middleware(['auth', 'XSS']);
+Route::get('users/reset/{id}', [UserController::class, 'reset'])->name('users.reset')->middleware(['auth', 'XSS']);
+Route::post('users/reset/{id}', [UserController::class, 'updatePassword'])->name('users.resetpassword')->middleware(['auth', 'XSS']);
+Route::resource('permissions', PermissionController::class)->middleware(['auth', 'XSS',]);
 
 //==================================== cache setting ====================================//
-Route::get('/config-cache', function() {
+Route::get('/config-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('view:clear');

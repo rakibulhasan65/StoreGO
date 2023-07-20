@@ -1,6 +1,6 @@
 @php
     $logo = \App\Models\Utility::get_file('uploads/logo/');
-    
+
     $company_logo = \App\Models\Utility::GetLogo();
     $settings = Utility::settings();
     $setting = App\Models\Utility::colorset();
@@ -97,6 +97,7 @@
                         <li class="nav-item">
                             <a class="btn btn-light ms-2 me-1" href="{{ route('register') }}">Register</a>
                         </li>
+
                     @endif
                 </ul>
             </div>
@@ -820,14 +821,14 @@
             clientId: 'd3027becf4054ac6bdc3224f4d32cab9',
             appName: 'appTest',
             appVersion: { major: 1, minor: 0 },
-            platformCategory: 'web', 
+            platformCategory: 'web',
         });
 
         // projectId should be saved from an earlier call to createDesign
         var projectId = 'd3027becf4054ac6bdc3224f4d32cab9';
         var imageContainer = document.getElementById("image-container");
         const editButton = document.getElementById("edit-project-button");
-        
+
         editButton.addEventListener('click', () => {
             const editDesignCallback = {
                 onCancel: () => {},
@@ -847,7 +848,7 @@
                 }
             );
         });
-    })();    
+    })();
     </script> --}}
 
 
