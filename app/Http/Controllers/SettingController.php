@@ -23,9 +23,10 @@ class SettingController extends Controller
             \App::setLocale(isset($store->lang) ? $store->lang : 'en');
         }
     }
+
     public function index()
     {
-        if(\Auth::user()->can('Manage Settings')){
+        if (\Auth::user()->can('Manage Settings')) {
             $settings = Utility::settings();
 
             if (Auth::user()->type == 'super admin') {
@@ -81,7 +82,7 @@ class SettingController extends Controller
                             ], '', env('APP_URL')
                         );
                     }
-                                    
+
                     try {
                         $pwa_data = \File::get(storage_path('uploads/customer_app/store_' . $store_settings->id . '/manifest.json'));
                         $pwa_data = json_decode($pwa_data);
@@ -89,18 +90,17 @@ class SettingController extends Controller
                     } catch (\Throwable$th) {
                         $pwa_data = '';
                     }
-                    $PixelFields = PixelFields::where('store_id' , $user->current_store)->orderBy('id')->get();
-                    return view('settings.index', compact('settings', 'store_settings', 'plan', 'serverIp', 'subdomain_name', 'store_payment_setting','pwa_data','PixelFields'));
+                    $PixelFields = PixelFields::where('store_id', $user->current_store)->orderBy('id')->get();
+                    return view('settings.index', compact('settings', 'store_settings', 'plan', 'serverIp', 'subdomain_name', 'store_payment_setting', 'pwa_data', 'PixelFields'));
                 } else {
                     return redirect()->back()->with('error', __('Permission denied.'));
                 }
             }
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', 'Permission denied.');
         }
     }
-  
+
     public function saveBusinessSettings(Request $request)
     {
         // dd($request->all());
@@ -165,59 +165,56 @@ class SettingController extends Controller
             //     );
             // }
 
-            if($request->logo_dark)
-            {
+            if ($request->logo_dark) {
                 $logoName = 'logo-dark.png';
                 $dir = 'uploads/logo/';
 
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
-                $path = Utility::upload_file($request,'logo_dark',$logoName,$dir,$validation);
-                if($path['flag'] == 1){
+                $path = Utility::upload_file($request, 'logo_dark', $logoName, $dir, $validation);
+                if ($path['flag'] == 1) {
 
-                $logo_dark = $path['url'];
+                    $logo_dark = $path['url'];
 
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
                 }
 
             }
 
-            if($request->logo_light)
-            {
+            if ($request->logo_light) {
 
                 $logoName = 'logo-light.png';
                 $dir = 'uploads/logo/';
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
-                $path = Utility::upload_file($request,'logo_light',$logoName,$dir,$validation);
+                $path = Utility::upload_file($request, 'logo_light', $logoName, $dir, $validation);
                 // dd($path);
-                if($path['flag'] == 1){
+                if ($path['flag'] == 1) {
                     $logo_light = $path['url'];
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
                 }
             }
 
 
-            if($request->favicon)
-            {
+            if ($request->favicon) {
                 $favicon = 'favicon.png';
                 $dir = 'uploads/logo/';
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
 
 
-                $path = Utility::upload_file($request,'favicon',$favicon,$dir,$validation);
-                if($path['flag'] == 1){
+                $path = Utility::upload_file($request, 'favicon', $favicon, $dir, $validation);
+                if ($path['flag'] == 1) {
                     $favicon = $path['url'];
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
                 }
 
@@ -268,16 +265,16 @@ class SettingController extends Controller
 
                 $dir = 'uploads/logo/';
 
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
-                $path = Utility::upload_file($request,'logo_dark',$logoName,$dir,$validation);
+                $path = Utility::upload_file($request, 'logo_dark', $logoName, $dir, $validation);
 
 
-                if($path['flag'] == 1){
+                if ($path['flag'] == 1) {
                     $logo_dark = $path['url'];
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
                 }
                 $logo_dark = !empty($request->logo_dark) ? $logoName : 'logo_dark.png';
@@ -293,20 +290,20 @@ class SettingController extends Controller
 
             }
             if ($request->logo_light) {
-                
+
                 $lightlogoName = time() . 'logo-light.png';
                 $dir = 'uploads/logo/';
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
-                $path = Utility::upload_file($request,'logo_light',$lightlogoName,$dir,$validation);
+                $path = Utility::upload_file($request, 'logo_light', $lightlogoName, $dir, $validation);
 
-                if($path['flag'] == 1){
+                if ($path['flag'] == 1) {
                     $logo_light = $path['url'];
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
-                }   
+                }
                 $company_logo = !empty($request->logo_light) ? $lightlogoName : 'logo-light.png';
                 \DB::insert(
                     'insert into settings (`value`, `name`,`created_by`,`store_id`) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
@@ -323,15 +320,15 @@ class SettingController extends Controller
                 $favicon = time() . 'favicon.png';
 
                 $dir = 'uploads/logo/';
-                $validation =[
-                    'mimes:'.'png',
-                    'max:'.'20480',
+                $validation = [
+                    'mimes:' . 'png',
+                    'max:' . '20480',
                 ];
-                $path = Utility::upload_file($request,'favicon',$favicon,$dir,$validation);
+                $path = Utility::upload_file($request, 'favicon', $favicon, $dir, $validation);
 
-                if($path['flag'] == 1){
+                if ($path['flag'] == 1) {
                     $company_favicon = $path['url'];
-                }else{
+                } else {
                     return redirect()->back()->with('error', __($path['msg']));
                 }
                 $company_favicon = !empty($request->favicon) ? $favicon : 'favicon.png';
@@ -375,17 +372,17 @@ class SettingController extends Controller
                 foreach ($post as $key => $data) {
                     if ($data != '') {
                         \DB::insert('insert into settings (`value`, `name`,`created_by`,`store_id`) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)', [
-                            $data,
-                            $key,
-                            \Auth::user()->creatorId(),
-                            \Auth::user()->current_store,
-                        ]
+                                $data,
+                                $key,
+                                \Auth::user()->creatorId(),
+                                \Auth::user()->current_store,
+                            ]
                         );
                     }
                 }
             }
 
-        } 
+        }
 
         return redirect()->back()->with('success', __('Business setting successfully saved.'));
     }
@@ -393,31 +390,31 @@ class SettingController extends Controller
     public function saveCompanySettings(Request $request)
     {
 
-        
-            $request->validate(
-                [
-                    'company_name' => 'required|string|max:50',
-                    'company_email' => 'required',
-                    'company_email_from_name' => 'required|string',
-                ]
-            );
-            $post = $request->all();
-            unset($post['_token']);
 
-            foreach ($post as $key => $data) {
-                $settings = Utility::settings();
-                if (in_array($key, array_keys($settings))) {
-                    \DB::insert(
-                        'insert into settings (`value`, `name`,`created_by`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                            $data,
-                            $key,
-                            \Auth::user()->current_store,
-                        ]
-                    );
-                }
+        $request->validate(
+            [
+                'company_name' => 'required|string|max:50',
+                'company_email' => 'required',
+                'company_email_from_name' => 'required|string',
+            ]
+        );
+        $post = $request->all();
+        unset($post['_token']);
+
+        foreach ($post as $key => $data) {
+            $settings = Utility::settings();
+            if (in_array($key, array_keys($settings))) {
+                \DB::insert(
+                    'insert into settings (`value`, `name`,`created_by`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
+                        $data,
+                        $key,
+                        \Auth::user()->current_store,
+                    ]
+                );
             }
+        }
 
-        
+
     }
 
     public function saveEmailSettings(Request $request)
@@ -460,7 +457,7 @@ class SettingController extends Controller
 
     public function saveSystemSettings(Request $request)
     {
-       
+
         $request->validate(
             [
                 'site_currency' => 'required',
@@ -487,7 +484,7 @@ class SettingController extends Controller
         }
 
         return redirect()->back()->with('success', __('Setting successfully updated.'));
-       
+
     }
 
     public function savePusherSettings(Request $request)
@@ -549,7 +546,7 @@ class SettingController extends Controller
                     ]
                 );
             }
-           
+
             $request->user = Auth::user()->creatorId();
 
             $arrEnv = [
@@ -562,6 +559,11 @@ class SettingController extends Controller
                 'PAYPAL_MODE' => $request->paypal_mode,
                 'PAYPAL_CLIENT_ID' => $request->paypal_client_id,
                 'PAYPAL_SECRET_KEY' => $request->paypal_secret_key,
+                'BKASH_APP_KEY' => $request->bkash_app_key,
+                'BKASH_APP_SECRET' => $request->bkash_secret_key,
+                'BKASH_USERNAME' => $request->bkash_username,
+                'BKASH_PASSWORD' => $request->bkash_password,
+                'ENABLE_BKASH' => $request->enable_bkash ?? 'off',
             ];
             Artisan::call('config:cache');
             Artisan::call('config:clear');
@@ -625,6 +627,15 @@ class SettingController extends Controller
                     'paypal_secret_key' => 'required|string',
                 ]
             );
+        } elseif (isset($request->is_bkash_enabled) && $request->is_bkash_enabled == 'on') {
+            $request->validate(
+                [
+                    'bkash_app_key' => 'required|string',
+                    'bkash_secret_key' => 'required|string',
+                    'bkash_username' => 'required|string',
+                    'bkash_password' =>'required|string',
+                ]
+            );
         }
 
         $store['currency'] = $request->currency_symbol;
@@ -639,6 +650,11 @@ class SettingController extends Controller
         $store['PAYPAL_CLIENT_ID'] = $request->paypal_client_id;
         $store['PAYPAL_SECRET_KEY'] = $request->paypal_secret_key;
         $store['ENABLE_WHATSAPP'] = $request->enable_whatsapp ?? 'off';
+        $store['BKASH_APP_KEY'] = $request->bkash_app_key;
+        $store['BKASH_APP_SECRET'] = $request->bkash_secret_key;
+        $store['BKASH_USERNAME'] = $request->bkash_username;
+        $store['BKASH_PASSWORD'] = $request->bkash_password;
+        $store['is_bkash_enabled'] = $request->is_bkash_enabled ?? 'off';
         $store['WHATSAPP_NUMBER'] = str_replace(' ', '', $request->whatsapp_number);
         $store['ENABLE_COD'] = $request->enable_cod ?? 'off';
         $store['ENABLE_BANK'] = $request->enable_bank ?? 'off';
@@ -652,7 +668,7 @@ class SettingController extends Controller
         self::shopePaymentSettings($request);
 
         return redirect()->back()->with('success', __('Payment Store setting successfully created.'));
-        
+
     }
 
     public function saveOwneremailSettings(Request $request, $slug)
@@ -797,8 +813,7 @@ class SettingController extends Controller
                 ]
             );
         }
-        try
-        {
+        try {
             config(
                 [
                     'mail.driver' => $request->mail_driver,
@@ -909,18 +924,22 @@ class SettingController extends Controller
             $post['is_paypal_enabled'] = $request->is_paypal_enabled;
         }
 
-        if (isset($request->is_paystack_enabled) && $request->is_paystack_enabled == 'on') {
+        if (isset($request->is_bkash_enabled) && $request->is_bkash_enabled == 'on') {
             $request->validate(
                 [
-                    'paystack_public_key' => 'required|string',
-                    'paystack_secret_key' => 'required|string',
+                    'bkash_app_key' => 'required|string',
+                    'bkash_secret_key' => 'required|string',
+                    'bkash_username' => 'required|string',
+                    'bkash_password' =>'required|string',
                 ]
             );
-            $post['is_paystack_enabled'] = $request->is_paystack_enabled;
-            $post['paystack_public_key'] = $request->paystack_public_key;
-            $post['paystack_secret_key'] = $request->paystack_secret_key;
+            $post['is_bkash_enabled'] = $request->is_bkash_enabled;
+            $post['bkash_app_key'] = $request->bkash_app_key;
+            $post['bkash_secret_key'] = $request->bkash_secret_key;
+            $post['bkash_username'] = $request->bkash_username;
+            $post['bkash_password'] = $request->bkash_password;
         } else {
-            $post['is_paystack_enabled'] = $request->is_paystack_enabled;
+            $post['is_bkash_enabled'] = $request->is_bkash_enabled;
         }
 
         if (isset($request->is_flutterwave_enabled) && $request->is_flutterwave_enabled == 'on') {
@@ -1069,8 +1088,7 @@ class SettingController extends Controller
         } else {
             $post['enable_telegram'] = 'off';
         }
-        if(isset($request->is_toyyibpay_enabled) && $request->is_toyyibpay_enabled == 'on')
-        {
+        if (isset($request->is_toyyibpay_enabled) && $request->is_toyyibpay_enabled == 'on') {
             $request->validate(
                 [
                     'toyyibpay_category_code' => 'required|string',
@@ -1080,19 +1098,16 @@ class SettingController extends Controller
             $post['is_toyyibpay_enabled'] = $request->is_toyyibpay_enabled;
             $post['toyyibpay_category_code'] = $request->toyyibpay_category_code;
             $post['toyyibpay_secret_key'] = $request->toyyibpay_secret_key;
-        }
-        else
-        {
+        } else {
             $post['is_toyyibpay_enabled'] = $request->is_toyyibpay_enabled;
         }
-        if(isset($request->is_payfast_enabled) && $request->is_payfast_enabled == 'on')
-        {
+        if (isset($request->is_payfast_enabled) && $request->is_payfast_enabled == 'on') {
             $request->validate(
                 [
-                    'payfast_mode'=>'required|string',
+                    'payfast_mode' => 'required|string',
                     'payfast_merchant_id' => 'required|string',
                     'payfast_merchant_key' => 'required|string',
-                    'payfast_signature'=>'required|string',
+                    'payfast_signature' => 'required|string',
                 ]
             );
             $post['is_payfast_enabled'] = $request->is_payfast_enabled;
@@ -1100,9 +1115,7 @@ class SettingController extends Controller
             $post['payfast_merchant_id'] = $request->payfast_merchant_id;
             $post['payfast_merchant_key'] = $request->payfast_merchant_key;
             $post['payfast_signature'] = $request->payfast_signature;
-        }
-        else
-        {
+        } else {
             $post['is_payfast_enabled'] = $request->is_payfast_enabled;
         }
         foreach ($post as $key => $data) {
@@ -1154,18 +1167,22 @@ class SettingController extends Controller
             $post['is_paypal_enabled'] = $request->is_paypal_enabled;
         }
 
-        if (isset($request->is_paystack_enabled) && $request->is_paystack_enabled == 'on') {
+        if (isset($request->is_bkash_enabled) && $request->is_bkash_enabled == 'on') {
             $request->validate(
                 [
-                    'paystack_public_key' => 'required|string',
-                    'paystack_secret_key' => 'required|string',
+                    'bkash_app_key' => 'required|string',
+                    'bkash_secret_key' => 'required|string',
+                    'bkash_username' => 'required|string',
+                    'bkash_password' =>'required|string',
                 ]
             );
-            $post['is_paystack_enabled'] = $request->is_paystack_enabled;
-            $post['paystack_public_key'] = $request->paystack_public_key;
-            $post['paystack_secret_key'] = $request->paystack_secret_key;
+            $post['is_bkash_enabled'] = $request->is_bkash_enabled;
+            $post['bkash_app_key'] = $request->bkash_app_key;
+            $post['bkash_secret_key'] = $request->bkash_secret_key;
+            $post['bkash_username'] = $request->bkash_username;
+            $post['bkash_password'] = $request->bkash_password;
         } else {
-            $post['is_paystack_enabled'] = $request->is_paystack_enabled;
+            $post['is_bkash_enabled'] = $request->is_bkash_enabled;
         }
 
         if (isset($request->is_flutterwave_enabled) && $request->is_flutterwave_enabled == 'on') {
@@ -1256,7 +1273,7 @@ class SettingController extends Controller
         } else {
             $post['is_coingate_enabled'] = $request->is_coingate_enabled;
         }
-       
+
         if (isset($request->is_paymentwall_enabled) && $request->is_paymentwall_enabled == 'on') {
 
             $validator = \Validator::make(
@@ -1278,8 +1295,7 @@ class SettingController extends Controller
         } else {
             $post['is_paymentwall_enabled'] = 'off';
         }
-        if(isset($request->is_toyyibpay_enabled) && $request->is_toyyibpay_enabled == 'on')
-        {
+        if (isset($request->is_toyyibpay_enabled) && $request->is_toyyibpay_enabled == 'on') {
             $request->validate(
                 [
                     'toyyibpay_category_code' => 'required|string',
@@ -1289,19 +1305,16 @@ class SettingController extends Controller
             $post['is_toyyibpay_enabled'] = $request->is_toyyibpay_enabled;
             $post['toyyibpay_category_code'] = $request->toyyibpay_category_code;
             $post['toyyibpay_secret_key'] = $request->toyyibpay_secret_key;
-        }
-        else
-        {
+        } else {
             $post['is_toyyibpay_enabled'] = $request->is_toyyibpay_enabled;
         }
-        if(isset($request->is_payfast_enabled) && $request->is_payfast_enabled == 'on')
-        {
+        if (isset($request->is_payfast_enabled) && $request->is_payfast_enabled == 'on') {
             $request->validate(
                 [
-                    'payfast_mode'=>'required|string',
+                    'payfast_mode' => 'required|string',
                     'payfast_merchant_id' => 'required|string',
                     'payfast_merchant_key' => 'required|string',
-                    'payfast_signature'=>'required|string',
+                    'payfast_signature' => 'required|string',
                 ]
             );
             $post['is_payfast_enabled'] = $request->is_payfast_enabled;
@@ -1309,19 +1322,17 @@ class SettingController extends Controller
             $post['payfast_merchant_id'] = $request->payfast_merchant_id;
             $post['payfast_merchant_key'] = $request->payfast_merchant_key;
             $post['payfast_signature'] = $request->payfast_signature;
-        }
-        else
-        {
+        } else {
             $post['is_payfast_enabled'] = $request->is_payfast_enabled;
         }
-        
+
         if (isset($request->is_skrill_enabled) && $request->is_skrill_enabled == 'on') {
             $request->validate(
                 [
                     'skrill_email' => 'required|email',
                 ]
             );
-           
+
             $post['is_skrill_enabled'] = $request->is_skrill_enabled;
             $post['skrill_email'] = $request->skrill_email;
         } else {
@@ -1376,8 +1387,7 @@ class SettingController extends Controller
     public function storageSettingStore(Request $request)
     {
 
-        if(isset($request->storage_setting) && $request->storage_setting == 'local')
-        {
+        if (isset($request->storage_setting) && $request->storage_setting == 'local') {
             $request->validate(
                 [
 
@@ -1392,63 +1402,59 @@ class SettingController extends Controller
             $post['local_storage_max_upload_size'] = $request->local_storage_max_upload_size;
 
         }
-        if(isset($request->storage_setting) && $request->storage_setting == 's3')
-
-        {
+        if (isset($request->storage_setting) && $request->storage_setting == 's3') {
 
             $request->validate(
                 [
-                    's3_key'                  => 'required',
-                    's3_secret'               => 'required',
-                    's3_region'               => 'required',
-                    's3_bucket'               => 'required',
-                    's3_url'                  => 'required',
-                    's3_endpoint'             => 'required',
-                    's3_max_upload_size'      => 'required',
-                    's3_storage_validation'   => 'required',
+                    's3_key' => 'required',
+                    's3_secret' => 'required',
+                    's3_region' => 'required',
+                    's3_bucket' => 'required',
+                    's3_url' => 'required',
+                    's3_endpoint' => 'required',
+                    's3_max_upload_size' => 'required',
+                    's3_storage_validation' => 'required',
                 ]
             );
-            $post['storage_setting']            = $request->storage_setting;
-            $post['s3_key']                     = $request->s3_key;
-            $post['s3_secret']                  = $request->s3_secret;
-            $post['s3_region']                  = $request->s3_region;
-            $post['s3_bucket']                  = $request->s3_bucket;
-            $post['s3_url']                     = $request->s3_url;
-            $post['s3_endpoint']                = $request->s3_endpoint;
-            $post['s3_max_upload_size']         = $request->s3_max_upload_size;
-            $s3_storage_validation              = implode(',', $request->s3_storage_validation);
-            $post['s3_storage_validation']      = $s3_storage_validation;
+            $post['storage_setting'] = $request->storage_setting;
+            $post['s3_key'] = $request->s3_key;
+            $post['s3_secret'] = $request->s3_secret;
+            $post['s3_region'] = $request->s3_region;
+            $post['s3_bucket'] = $request->s3_bucket;
+            $post['s3_url'] = $request->s3_url;
+            $post['s3_endpoint'] = $request->s3_endpoint;
+            $post['s3_max_upload_size'] = $request->s3_max_upload_size;
+            $s3_storage_validation = implode(',', $request->s3_storage_validation);
+            $post['s3_storage_validation'] = $s3_storage_validation;
 
         }
 
-        if(isset($request->storage_setting) && $request->storage_setting == 'wasabi')
-        {
+        if (isset($request->storage_setting) && $request->storage_setting == 'wasabi') {
             $request->validate(
                 [
-                    'wasabi_key'                    => 'required',
-                    'wasabi_secret'                 => 'required',
-                    'wasabi_region'                 => 'required',
-                    'wasabi_bucket'                 => 'required',
-                    'wasabi_url'                    => 'required',
-                    'wasabi_root'                   => 'required',
-                    'wasabi_max_upload_size'        => 'required',
-                    'wasabi_storage_validation'     => 'required',
+                    'wasabi_key' => 'required',
+                    'wasabi_secret' => 'required',
+                    'wasabi_region' => 'required',
+                    'wasabi_bucket' => 'required',
+                    'wasabi_url' => 'required',
+                    'wasabi_root' => 'required',
+                    'wasabi_max_upload_size' => 'required',
+                    'wasabi_storage_validation' => 'required',
                 ]
             );
-            $post['storage_setting']            = $request->storage_setting;
-            $post['wasabi_key']                 = $request->wasabi_key;
-            $post['wasabi_secret']              = $request->wasabi_secret;
-            $post['wasabi_region']              = $request->wasabi_region;
-            $post['wasabi_bucket']              = $request->wasabi_bucket;
-            $post['wasabi_url']                 = $request->wasabi_url;
-            $post['wasabi_root']                = $request->wasabi_root;
-            $post['wasabi_max_upload_size']     = $request->wasabi_max_upload_size;
-            $wasabi_storage_validation          = implode(',', $request->wasabi_storage_validation);
-            $post['wasabi_storage_validation']  = $wasabi_storage_validation;
+            $post['storage_setting'] = $request->storage_setting;
+            $post['wasabi_key'] = $request->wasabi_key;
+            $post['wasabi_secret'] = $request->wasabi_secret;
+            $post['wasabi_region'] = $request->wasabi_region;
+            $post['wasabi_bucket'] = $request->wasabi_bucket;
+            $post['wasabi_url'] = $request->wasabi_url;
+            $post['wasabi_root'] = $request->wasabi_root;
+            $post['wasabi_max_upload_size'] = $request->wasabi_max_upload_size;
+            $wasabi_storage_validation = implode(',', $request->wasabi_storage_validation);
+            $post['wasabi_storage_validation'] = $wasabi_storage_validation;
         }
 
-        foreach($post as $key => $data)
-        {
+        foreach ($post as $key => $data) {
 
             $arr = [
                 $data,
@@ -1464,18 +1470,22 @@ class SettingController extends Controller
         return redirect()->back()->with('success', 'Storage setting successfully updated.');
 
     }
-    public function CreatePixel(){
+
+    public function CreatePixel()
+    {
         $user = Auth::user();
         $store_settings = Store::where('id', $user->current_store)->first();
-        return view('settings.edit_pixel',compact('store_settings'));
+        return view('settings.edit_pixel', compact('store_settings'));
     }
-    public function savePixelSettings(Request $request, $slug){
-    
-        $store = Store::where('slug', $slug)->where('created_by',\Auth::user()->creatorId())->first();
+
+    public function savePixelSettings(Request $request, $slug)
+    {
+
+        $store = Store::where('slug', $slug)->where('created_by', \Auth::user()->creatorId())->first();
 
         $request->validate([
-            'platform'=>'required',
-            'pixel_id'=>'required'
+            'platform' => 'required',
+            'pixel_id' => 'required'
         ]);
         $pixel_fields = new PixelFields();
         $pixel_fields->platform = $request->platform;
@@ -1485,19 +1495,22 @@ class SettingController extends Controller
 
         return redirect()->back()->with('success', __('Fields Saves Successfully.!'));
     }
-    public function pixelDelete($id){
-        $pixelfield= PixelFields::find($id);
+
+    public function pixelDelete($id)
+    {
+        $pixelfield = PixelFields::find($id);
         $pixelfield->delete();
         return redirect()->back()->with('success', __('Pixel Deleted Successfully!'));
     }
+
     public function CookieConsent(Request $request)
     {
 
-        $settings= Utility::settings();
-        
-        if($settings['enable_cookie'] == "on" && $settings['cookie_logging'] == "on"){
+        $settings = Utility::settings();
+
+        if ($settings['enable_cookie'] == "on" && $settings['cookie_logging'] == "on") {
             $allowed_levels = ['necessary', 'analytics', 'targeting'];
-            $levels = array_filter($request['cookie'], function($level) use ($allowed_levels) {
+            $levels = array_filter($request['cookie'], function ($level) use ($allowed_levels) {
                 return in_array($level, $allowed_levels);
             });
             $whichbrowser = new \WhichBrowser\Parser($_SERVER['HTTP_USER_AGENT']);
@@ -1516,75 +1529,72 @@ class SettingController extends Controller
             $time = (new \DateTime())->format('H:i:s') . ' UTC';
 
 
-            $new_line = implode(',', [$ip, $date, $time,json_encode($request['cookie']), $device_type, $browser_language, $browser_name, $os_name,
-                isset($query)?$query['country']:'',isset($query)?$query['region']:'',isset($query)?$query['regionName']:'',isset($query)?$query['city']:'',isset($query)?$query['zip']:'',isset($query)?$query['lat']:'',isset($query)?$query['lon']:'']);
+            $new_line = implode(',', [$ip, $date, $time, json_encode($request['cookie']), $device_type, $browser_language, $browser_name, $os_name,
+                isset($query) ? $query['country'] : '', isset($query) ? $query['region'] : '', isset($query) ? $query['regionName'] : '', isset($query) ? $query['city'] : '', isset($query) ? $query['zip'] : '', isset($query) ? $query['lat'] : '', isset($query) ? $query['lon'] : '']);
 
-            if(!file_exists(storage_path(). '/uploads/sample/data.csv')) {
+            if (!file_exists(storage_path() . '/uploads/sample/data.csv')) {
 
                 $first_line = 'IP,Date,Time,Accepted cookies,Device type,Browser language,Browser name,OS Name,Country,Region,RegionName,City,Zipcode,Lat,Lon';
-                file_put_contents(storage_path() . '/uploads/sample/data.csv', $first_line . PHP_EOL , FILE_APPEND | LOCK_EX);
+                file_put_contents(storage_path() . '/uploads/sample/data.csv', $first_line . PHP_EOL, FILE_APPEND | LOCK_EX);
             }
-            file_put_contents(storage_path() . '/uploads/sample/data.csv', $new_line . PHP_EOL , FILE_APPEND | LOCK_EX);
+            file_put_contents(storage_path() . '/uploads/sample/data.csv', $new_line . PHP_EOL, FILE_APPEND | LOCK_EX);
 
             return response()->json('success');
         }
         return response()->json('error');
     }
+
     public function saveCookieSettings(Request $request)
     {
 
-            $validator = \Validator::make(
-                $request->all(), [
-                    'cookie_title' => 'required',
-                    'cookie_description' => 'required',
-                    'strictly_cookie_title' => 'required',
-                    'strictly_cookie_description' => 'required',
-                    'more_information_title' => 'required',
-                    'contactus_url' => 'required',
-                ]
-            );
+        $validator = \Validator::make(
+            $request->all(), [
+                'cookie_title' => 'required',
+                'cookie_description' => 'required',
+                'strictly_cookie_title' => 'required',
+                'strictly_cookie_description' => 'required',
+                'more_information_title' => 'required',
+                'contactus_url' => 'required',
+            ]
+        );
 
-            $post = $request->all();
+        $post = $request->all();
 
-            unset($post['_token']);
+        unset($post['_token']);
 
-            if ($request->enable_cookie)
-            {
-                $post['enable_cookie'] = 'on';
-            }
-            else{
-                $post['enable_cookie'] = 'off';
-            }
-            if ( $request->cookie_logging)
-            {
-                $post['cookie_logging'] = 'on';
-            }
-            else{
-                $post['cookie_logging'] = 'off';
-            }
-
-            $post['cookie_title']            = $request->cookie_title;
-            $post['cookie_description']            = $request->cookie_description;
-            $post['strictly_cookie_title']            = $request->strictly_cookie_title;
-            $post['strictly_cookie_description']            = $request->strictly_cookie_description;
-            $post['more_information_title']            = $request->more_information_title;
-            $post['contactus_url']            = $request->contactus_url;
-
-            $settings = Utility::settings();
-            foreach ($post as $key => $data) {
-
-                if (in_array($key, array_keys($settings))) {
-                    \DB::insert(
-                        'insert into settings (`value`, `name`,`created_by`,`created_at`,`updated_at`) values (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                            $data,
-                            $key,
-                            \Auth::user()->creatorId(),
-                            date('Y-m-d H:i:s'),
-                            date('Y-m-d H:i:s'),
-                        ]
-                    );
-                }
-            }
-            return redirect()->back()->with('success', 'Cookie setting successfully saved.');
+        if ($request->enable_cookie) {
+            $post['enable_cookie'] = 'on';
+        } else {
+            $post['enable_cookie'] = 'off';
         }
+        if ($request->cookie_logging) {
+            $post['cookie_logging'] = 'on';
+        } else {
+            $post['cookie_logging'] = 'off';
+        }
+
+        $post['cookie_title'] = $request->cookie_title;
+        $post['cookie_description'] = $request->cookie_description;
+        $post['strictly_cookie_title'] = $request->strictly_cookie_title;
+        $post['strictly_cookie_description'] = $request->strictly_cookie_description;
+        $post['more_information_title'] = $request->more_information_title;
+        $post['contactus_url'] = $request->contactus_url;
+
+        $settings = Utility::settings();
+        foreach ($post as $key => $data) {
+
+            if (in_array($key, array_keys($settings))) {
+                \DB::insert(
+                    'insert into settings (`value`, `name`,`created_by`,`created_at`,`updated_at`) values (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
+                        $data,
+                        $key,
+                        \Auth::user()->creatorId(),
+                        date('Y-m-d H:i:s'),
+                        date('Y-m-d H:i:s'),
+                    ]
+                );
+            }
+        }
+        return redirect()->back()->with('success', 'Cookie setting successfully saved.');
+    }
 }

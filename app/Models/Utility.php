@@ -113,6 +113,11 @@ class Utility extends Model
             "paypal_secret_key" => "",
             "stripe_key" => "",
             "stripe_secret" => "",
+            "bkash_app_key"=>"",
+            "bkash_secret_key"=>"",
+            "bkash_username"=>"",
+            "bkash_password"=>"",
+            "enable_bkash"=>"",
             "decimal_number" => "2",
             "tax_type" => "VAT",
             "shipping_display" => "on",
@@ -235,20 +240,20 @@ class Utility extends Model
             }
 
         }
-        
+
         if (\Auth::check()) {
             $data = $data->where('store_id', '=', $store_id)->where('theme_name', $theme_name);
         } else {
             $data = $data->where('store_id', '=', $store_id)->where('theme_name', $theme_name);
         }
         $data = $data->get();
- 
+
         if ($data->count() > 0) {
             foreach ($data as $row) {
                 $settings[$row->name] = $row->value;
             }
         }
-      
+
         return $settings;
     }
 
@@ -2221,6 +2226,11 @@ Order Date:" . ' ' . self::dateFormat($order->created_at));
             "paypal_secret_key" => "",
             "stripe_key" => "",
             "stripe_secret" => "",
+            "bkash_app_key"=>"",
+            "bkash_secret_key"=>"",
+            "bkash_username"=>"",
+            "bkash_password"=>"",
+            "enable_bkash"=>"",
             "decimal_number" => "2",
             "tax_type" => "VAT",
             "shipping_display" => "on",
@@ -2300,17 +2310,17 @@ Order Date:" . ' ' . self::dateFormat($order->created_at));
     public static function get_device_type($user_agent) {
         $mobile_regex = '/(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera mini|avantgo|mobilesafari|docomo)/i';
         $tablet_regex = '/(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i';
-    
+
         if(preg_match_all($mobile_regex, $user_agent)) {
             return 'mobile';
         } else {
-    
+
             if(preg_match_all($tablet_regex, $user_agent)) {
                 return 'tablet';
             } else {
                 return 'desktop';
             }
-    
+
         }
     }
 }

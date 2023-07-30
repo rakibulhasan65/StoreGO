@@ -2,7 +2,7 @@
 @php
     // $logo = asset(Storage::url('uploads/logo/'));
     $logo = \App\Models\Utility::get_file('uploads/logo/');
-    
+
     $logo_img = \App\Models\Utility::getValByName('company_logo');
     $logo_light = \App\Models\Utility::getValByName('company_logo_light');
     $s_logo = \App\Models\Utility::get_file('uploads/store_logo/');
@@ -16,22 +16,22 @@
     if (Auth::user()->type !== 'super admin') {
         $store_lang = $store_settings->lang;
     }
-    
+
     // storage setting
     $file_type = config('files_types');
     $setting = App\Models\Utility::settings();
-    
+
     $local_storage_validation = $setting['local_storage_validation'];
     $local_storage_validations = explode(',', $local_storage_validation);
-    
+
     $s3_storage_validation = $setting['s3_storage_validation'];
     $s3_storage_validations = explode(',', $s3_storage_validation);
-    
+
     $wasabi_storage_validation = $setting['wasabi_storage_validation'];
     $wasabi_storage_validations = explode(',', $wasabi_storage_validation);
-    
+
     $setting = App\Models\Utility::colorset();
-    
+
     $color = 'theme-3';
     if (!empty($setting['color'])) {
         $color = $setting['color'];
@@ -598,7 +598,7 @@
                                             {{-- </div> --}}
                                         </div>
                                     </div>
-                                   
+
                                     <div class="row">
                                         <div class="faq col-12">
                                             <div class="accordion accordion-flush setting-accordion"
@@ -631,7 +631,7 @@
                                                         data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <div class="row gy-4">
-                                                                
+
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         {{ Form::label('stripe_key', __('Stripe Key'), ['class' => 'col-form-label']) }}
@@ -741,7 +741,7 @@
                                                                                 id="paypal_secret_key" class="form-control"
                                                                                 value="{{ !isset($admin_payment_setting['paypal_secret_key']) || is_null($admin_payment_setting['paypal_secret_key']) ? '' : $admin_payment_setting['paypal_secret_key'] }}"
                                                                                 placeholder="{{ __('Secret Key') }}">
-                                                                        </div>  
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -756,14 +756,14 @@
                                                             aria-expanded="false"
                                                             aria-controls="collapseTwo">
                                                             <span
-                                                                class="d-flex align-items-center">{{ __('Paystack') }}</span>
+                                                                class="d-flex align-items-center">{{ __('BKash') }}</span>
                                                             <div class="d-flex align-items-center">
                                                                 <span class="me-2">{{ __('On/Off') }}:</span>
                                                                 <div
                                                                     class="form-check form-switch custom-switch-v1">
-                                                                    <input type="hidden" name="is_paystack_enabled" value="off">
-                                                                    <input type="checkbox" name="is_paystack_enabled" class="form-check-input input-primary" id="is_paystack_enabled" {{ isset($admin_payment_setting['is_paystack_enabled']) && $admin_payment_setting['is_paystack_enabled'] == 'on' ? 'checked="checked"' : '' }}>
-                                                                    <label class="form-check-label" for="is_paystack_enabled"></label>
+                                                                    <input type="hidden" name="is_bkash_enabled" value="off">
+                                                                    <input type="checkbox" name="is_bkash_enabled" class="form-check-input input-primary" id="is_bkash_enabled" {{ isset($admin_payment_setting['is_bkash_enabled']) && $admin_payment_setting['is_bkash_enabled'] == 'on' ? 'checked="checked"' : '' }}>
+                                                                    <label class="form-check-label" for="is_bkash_enabled"></label>
                                                                 </div>
                                                             </div>
                                                         </button>
@@ -777,20 +777,32 @@
                                                                 <div class="row align-items-center gy-4">
                                                                     <div class="col-lg-6">
                                                                         <div class="form-group">
-                                                                            <label for="paypal_client_id" class="col-form-label">{{ __('Public Key') }}</label>
-                                                                            <input type="text" name="paystack_public_key" id="paystack_public_key" class="form-control"
-                                                                                value="{{ !isset($admin_payment_setting['paystack_public_key']) || is_null($admin_payment_setting['paystack_public_key']) ? '' : $admin_payment_setting['paystack_public_key'] }}"
-                                                                                placeholder="{{ __('Public Key') }}">
+                                                                            <label for="bkash_app_key" class="col-form-label">{{ __('BKash App Key') }}</label>
+                                                                            <input type="text" name="bkash_app_key" id="bkash_app_key" class="form-control"
+                                                                                value="{{ !isset($admin_payment_setting['bkash_app_key']) || is_null($admin_payment_setting['bkash_app_key']) ? '' : $admin_payment_setting['bkash_app_key'] }}"
+                                                                                placeholder="{{ __('BKash App Key') }}">
+
+                                                                            <label for="bkash_username" class="col-form-label">{{ __('BKash Username') }}</label>
+                                                                            <input type="text" name="bkash_username" id="bkash_username" class="form-control"
+                                                                                   value="{{ !isset($admin_payment_setting['bkash_username']) || is_null($admin_payment_setting['bkash_username']) ? '' : $admin_payment_setting['bkash_username'] }}"
+                                                                                   placeholder="{{ __('BKash Username') }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="form-group">
-                                                                            <label for="paystack_secret_key" class="col-form-label">{{ __('Secret Key') }}</label>
-                                                                            <input type="text" name="paystack_secret_key"
-                                                                                id="paystack_secret_key"
+                                                                            <label for="bkash_secret_key" class="col-form-label">{{ __('BKash Secret Key') }}</label>
+                                                                            <input type="text" name="bkash_secret_key"
+                                                                                id="bkash_secret_key"
                                                                                 class="form-control"
-                                                                                value="{{ !isset($admin_payment_setting['paystack_secret_key']) || is_null($admin_payment_setting['paystack_secret_key']) ? '' : $admin_payment_setting['paystack_secret_key'] }}"
-                                                                                placeholder="{{ __('Secret Key') }}">
+                                                                                value="{{ !isset($admin_payment_setting['bkash_secret_key']) || is_null($admin_payment_setting['bkash_secret_key']) ? '' : $admin_payment_setting['bkash_secret_key'] }}"
+                                                                                placeholder="{{ __('BKash Secret Key') }}">
+
+                                                                            <label for="bkash_password" class="col-form-label">{{ __('BKash Password') }}</label>
+                                                                            <input type="password" name="bkash_password"
+                                                                                   id="bkash_password"
+                                                                                   class="form-control"
+                                                                                   value="{{ !isset($admin_payment_setting['bkash_password']) || is_null($admin_payment_setting['bkash_password']) ? '' : $admin_payment_setting['bkash_password'] }}"
+                                                                                   placeholder="{{ __('BKash Password') }}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -860,9 +872,9 @@
                                                             <div class="d-flex align-items-center">
                                                                 <span class="me-2">{{ __('On/Off') }}:</span>
                                                                 <div class="form-check form-switch custom-switch-v1">
-                                                                    <input type="hidden" name="is_razorpay_enabled" value="off"> 
+                                                                    <input type="hidden" name="is_razorpay_enabled" value="off">
                                                                     <input type="checkbox"
-                                                                        class="form-check-input input-primary" 
+                                                                        class="form-check-input input-primary"
                                                                         name="is_razorpay_enabled"
                                                                         id="is_razorpay_enabled"  {{ isset($admin_payment_setting['is_razorpay_enabled']) && $admin_payment_setting['is_razorpay_enabled'] == 'on' ? 'checked="checked"' : '' }}>
                                                                     <label class="form-check-label"
@@ -1083,7 +1095,7 @@
                                                                 <span class="me-2">{{ __('On/Off') }}:</span>
                                                                 <div class="form-check form-switch custom-switch-v1">
                                                                     <input type="hidden" name="is_mollie_enabled" value="off">
-                                                                    <input type="checkbox" name="is_mollie_enabled" 
+                                                                    <input type="checkbox" name="is_mollie_enabled"
                                                                         class="form-check-input input-primary"
                                                                         id="is_mollie_enabled"  {{ isset($admin_payment_setting['is_mollie_enabled']) && $admin_payment_setting['is_mollie_enabled'] == 'on' ? 'checked="checked"' : '' }}>
                                                                     <label class="form-check-label"
@@ -1095,7 +1107,7 @@
                                                     <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight" data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <div class="row">
-                                                                
+
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label for="mollie_api_key"
@@ -1584,7 +1596,7 @@
                                                 <div class="card-footer p-0">
                                                     <div class="col-sm-12 mt-3 px-2">
                                                         <div class="d-flex justify-content-between gap-2 flex-column flex-sm-row">
-                                                            <a href="#" 
+                                                            <a href="#"
                                                                 data-size="md" data-url="{{ route('test.mail') }}"
                                                                 data-title="{{ __('Send Test Mail') }}"
                                                                 class="btn btn-xs  btn-primary send_email">
@@ -1833,7 +1845,7 @@
                             </div>
                         {{Form::close()}}
                         </div>
-                    </div> 
+                    </div>
                     <div class="tab-pane fade" id="pills-cache-settings" role="tabpanel" aria-labelledby="pills-cache_settings-tab">
                         <div class="card mb-3">
                             <div class="card-header">
@@ -1867,7 +1879,7 @@
                     <div class="tab-pane fade" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
                         <div class="col-xl-12 col-lg-12 col-md-12">
                             <div class="card">
-                
+
                                 {{Form::model($settings,array('route'=>'cookie.setting','method'=>'post'))}}
                                     <div class="card-header flex-column flex-lg-row  d-flex align-items-lg-center gap-2 justify-content-between">
                                         <h5>{{ __('Cookie Settings') }}</h5>
@@ -1912,7 +1924,7 @@
                                                     {!! Form::textarea('strictly_cookie_description', null, ['class' => 'form-control cookie_setting ', 'rows' => '3']) !!}
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-12">
                                                 <h5>{{__('More Information')}}</h5>
                                             </div>
@@ -1928,7 +1940,7 @@
                                                     {{ Form::text('contactus_url', null, ['class' => 'form-control cookie_setting']) }}
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="modal-footer d-flex align-items-center gap-2 flex-sm-column flex-lg-row justify-content-between" >
@@ -2020,7 +2032,7 @@
                                                                             class=" img_setting" width="170px"
                                                                             id="logo-light">
                                                                     </a>
-                                                                    
+
                                                                     {{--  <a href="{{ $logo . 'logo-light.png' }}" target="_blank">
                                                                         <img id="logo-light" alt="your image"
                                                                             src="{{ $logo . 'logo-light.png' }}" width="170px"
@@ -2197,9 +2209,9 @@
                                                             <hr class="my-2" />
                                                             <div class="form-check form-switch">
                                                                 <input type="checkbox" class="form-check-input"
-                                                                    id="cust-theme-bg" name="cust_theme_bg" 
+                                                                    id="cust-theme-bg" name="cust_theme_bg"
                                                                     {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1" 
+                                                                <label class="form-check-label f-w-600 pl-1"
                                                                     for="cust-theme-bg">{{ __('Transparent layout') }}</label>
                                                             </div>
                                                         </div>
@@ -2370,7 +2382,7 @@
                                                             {{ __('Store Link') }}
                                                         </label>
                                                             </div>
-                                                
+
                                                             <div class="col-sm-4">
                                                                 @if ($plan->enable_custdomain == 'on')
                                                                     <label
@@ -2637,7 +2649,7 @@
                                                             'rows' => 3,
                                                             'placeholder' => __('Meta Description'),
                                                         ]) !!}
-    
+
                                                         @error('meta_description')
                                                             <span class="invalid-about" role="alert">
                                                                 <strong class="text-danger">{{ $message }}</strong>
@@ -2646,12 +2658,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    
+
                                                     <div class="form-group pt-0">
                                                         <div class=" setting-card">
                                                             <label for="" class="form-label">{{ __('Meta Image') }}</label>
                                                             <div class="logo-content mt-4">
-                                                                
+
                                                                 <a href="{{$metaimage.(isset($store_settings->metaimage) && !empty($store_settings->metaimage)? $store_settings->metaimage:'default.png')}}" target="_blank">
                                                                     <img id="meta_image" alt="your image" src="{{$metaimage.(isset($store_settings->metaimage) && !empty($store_settings->metaimage)? $store_settings->metaimage:'default.png')}}" width="150px" class="img_setting">
                                                                 </a>
@@ -2837,7 +2849,7 @@
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <div class="row">
                                     <div class="faq col-12">
                                         <div class="accordion accordion-flush setting-accordion"
@@ -2869,14 +2881,14 @@
                                                     data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         <div class="row gy-4">
-                                                            
+
                                                             <div class="col-6 py-2">
                                                                 <small>
                                                                     {{ __('Note : Enable or disable cash on delivery.') }}</small><br>
                                                                 <small>
                                                                     {{ __('This detail will use for make checkout of shopping cart.') }}</small>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2943,7 +2955,7 @@
                                                         </span>
                                                         <div class="d-flex align-items-center">
                                                             <span class="me-2">{{ __('On/Off') }}:</span>
-                                                            
+
                                                             <div class="form-check form-switch custom-switch-v1">
                                                                 <input type="hidden" name="enable_whatsapp" value="off">
                                                                 <input type="checkbox" class="form-check-input input-primary" name="enable_whatsapp" id="enable_whatsapp" {{ $store_settings['enable_whatsapp'] == 'on' ? 'checked="checked"' : '' }}>
@@ -2996,7 +3008,7 @@
                                                                     for="enable_bank"></label>
                                                             </div>
                                                         </div>
-                                                       
+
                                                     </button>
                                                 </h2>
                                                 <div id="collapseSeventeen"
@@ -3047,7 +3059,7 @@
                                                     data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         <div class="row gy-4">
-                                                            
+
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     {{ Form::label('stripe_key', __('Stripe Key'), ['class' => 'col-form-label']) }}
@@ -3157,7 +3169,7 @@
                                                                             id="paypal_secret_key" class="form-control"
                                                                             value="{{ !isset($store_payment_setting['paypal_secret_key']) || is_null($store_payment_setting['paypal_secret_key']) ? '' : $store_payment_setting['paypal_secret_key'] }}"
                                                                             placeholder="{{ __('Secret Key') }}">
-                                                                    </div>  
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3172,7 +3184,7 @@
                                                         aria-expanded="false"
                                                         aria-controls="collapseTwo">
                                                         <span
-                                                            class="d-flex align-items-center">{{ __('Paystack') }}</span>
+                                                            class="d-flex align-items-center">{{ __('BKash') }}</span>
                                                         <div class="d-flex align-items-center">
                                                             <span class="me-2">{{ __('On/Off') }}:</span>
                                                             <div
@@ -3276,9 +3288,9 @@
                                                         <div class="d-flex align-items-center">
                                                             <span class="me-2">{{ __('On/Off') }}:</span>
                                                             <div class="form-check form-switch custom-switch-v1">
-                                                                <input type="hidden" name="is_razorpay_enabled" value="off"> 
+                                                                <input type="hidden" name="is_razorpay_enabled" value="off">
                                                                 <input type="checkbox"
-                                                                    class="form-check-input input-primary" 
+                                                                    class="form-check-input input-primary"
                                                                     name="is_razorpay_enabled"
                                                                     id="is_razorpay_enabled"  {{ isset($store_payment_setting['is_razorpay_enabled']) && $store_payment_setting['is_razorpay_enabled'] == 'on' ? 'checked="checked"' : '' }}>
                                                                 <label class="form-check-label"
@@ -3499,7 +3511,7 @@
                                                             <span class="me-2">{{ __('On/Off') }}:</span>
                                                             <div class="form-check form-switch custom-switch-v1">
                                                                 <input type="hidden" name="is_mollie_enabled" value="off">
-                                                                <input type="checkbox" name="is_mollie_enabled" 
+                                                                <input type="checkbox" name="is_mollie_enabled"
                                                                     class="form-check-input input-primary"
                                                                     id="is_mollie_enabled"  {{ isset($store_payment_setting['is_mollie_enabled']) && $store_payment_setting['is_mollie_enabled'] == 'on' ? 'checked="checked"' : '' }}>
                                                                 <label class="form-check-label"
@@ -3511,7 +3523,7 @@
                                                 <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight" data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         <div class="row">
-                                                            
+
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="mollie_api_key"
@@ -3894,6 +3906,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -4188,7 +4201,7 @@
                                         <h5 class="">{{ __('Pixel Fields Settings') }}</h5>
                                         <small>{{ __('Enter Your Pixel Fields Settings') }}</small>
                                     </div>
-                                    {{--  <a data-repeater-create 
+                                    {{--  <a data-repeater-create
                                         class="btn btn-sm btn-icon  btn-primary me-2"
                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="{{ __('Create Custom Field') }}">
@@ -4200,22 +4213,22 @@
                                 </div>
                                 <div class="card-body table-border-style">
                                     <div class="datatable-container">
-                                    
+
                                         <div class="table-responsive custom-field-table">
-                                            
+
                                             <table class="table dataTable-table" id="pc-dt-simple" data-repeater-list="fields">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>{{ __('Platform') }}</th>
                                                         <th>{{ __('Pixel Id') }}</th>
-                    
+
                                                         <th class="text-right">{{ __('Action') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($PixelFields as  $PixelField)
                                                         <tr>
-                                                            <td class="text-capitalize"> 
+                                                            <td class="text-capitalize">
                                                                 {{ $PixelField->platform }}
                                                             </td>
                                                             <td>
@@ -4235,7 +4248,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -4295,7 +4308,7 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             @endif
         </div>
         <!-- [ sample-page ] end -->

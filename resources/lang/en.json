@@ -641,6 +641,14 @@
     "Paypal Mode": "Paypal Mode",
     "Paystack": "Paystack",
     "Paytm": "Paytm",
+
+    "BKash": "BKash",
+    "BKash Mode": "BKash Mode",
+    "BKash App Key": "BKash App Key",
+    "BKash App Secret": "BKash App Secret",
+    "BKash Username": "BKash Username",
+    "BKash Password": "BKash Password",
+
     "Paytm Environment": "Paytm Environment",
     "Pending": "Pending",
     "Per Month": "Per Month",

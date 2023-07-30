@@ -51,7 +51,7 @@ use App\Http\Controllers\Auth\SocialiteLogin;
 //started with Socialite Google
 Route::get('/login/gotogoogle', [SocialiteLogin::class, 'goToGoogle'])->name('goToGoogle');
 Route::get('/login/gotogooglestore', [SocialiteLogin::class, 'goToGoogleStore'])->name('goToGoogleStore');
-
+//Route::get('/login/storePasswordSet',[SocialiteLogin::class,'storePasswordSet'])->name('storePasswordSet');
 //started with Socialite linkedin
 
 Route::get('/login/gotolinkedin', [SocialiteLogin::class, 'goToLinkedin'])->name('goToLinkedin');
@@ -504,4 +504,19 @@ Route::middleware(['auth', 'XSS'])->group(function () {
     Route::post('empty-cart', [ProductController::class, 'emptyCart']);
     Route::get('printview/pos', [PosController::class, 'printView'])->name('pos.printview');
     Route::get('pos/data/store', [PosController::class, 'store'])->name('pos.data.store');
+});
+//===================== Bkash Payment Method ===================================//
+Route::group(['middleware' => ['web']], function () {
+    // Payment Routes for bKash
+    Route::get('/bkash/payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'index']);
+    Route::get('/bkash/create-payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'createPayment'])->name('bkash-create-payment');
+    Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class,'callBack'])->name('bkash-callBack');
+
+    //search payment
+    Route::get('/bkash/search/{trxID}', [App\Http\Controllers\BkashTokenizePaymentController::class,'searchTnx'])->name('bkash-serach');
+
+    //refund payment routes
+    Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
+    Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
+
 });

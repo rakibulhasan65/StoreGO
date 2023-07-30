@@ -60,6 +60,11 @@ class Store extends Model
         'paypal_mode',
         'paypal_client_id',
         'paypal_secret_key',
+        'bkash_app_key',
+        'bkash_secret_key',
+        'bkash_username',
+        'bkash_password',
+        'is_bkash_enabled',
         'mail_driver',
         'mail_host',
         'mail_port',
@@ -82,11 +87,11 @@ class Store extends Model
 
     public static function create($data)
     {
-        $obj          = new Utility();
-        $table        = with(new Store)->getTable();
+        $obj = new Utility();
+        $table = with(new Store)->getTable();
         $data['slug'] = $obj->createSlug($table, $data['name']);
 
-        $store        = static::query()->create($data);
+        $store = static::query()->create($data);
 
         return $store;
     }
@@ -109,7 +114,8 @@ class Store extends Model
         return $slug;
     }
 
-    public static function pwa_store($slug){
+    public static function pwa_store($slug)
+    {
 
 
         $store = Store::where('slug', $slug)->first();
