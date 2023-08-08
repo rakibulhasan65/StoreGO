@@ -51,6 +51,15 @@ use App\Http\Controllers\Auth\SocialiteLogin;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['XSS']);
 
+//started with Socialite Google
+Route::get('/login/gotogoogle', [SocialiteLogin::class, 'goToGoogle'])->name('goToGoogle');
+Route::get('/login/gotogooglestore', [SocialiteLogin::class, 'goToGoogleStore'])->name('goToGoogleStore');
+
+//started with Socialite linkedin
+Route::get('/login/gotolinkedin', [SocialiteLogin::class, 'goToLinkedin'])->name('goToLinkedin');
+Route::get('/login/gotolinkedinstore', [SocialiteLogin::class, 'goToLinkedinStore'])->name('goToLinkedinStore');
+
+
 Route::get('login/{lang?}', function () {
 
     $url = \Request::url();
@@ -94,16 +103,6 @@ Route::get('login/{lang?}', function () {
 
 })->name('login');
 require __DIR__ . '/auth.php';
-
-
-//started with Socialite Google
-Route::get('/login/gotogoogle', [SocialiteLogin::class, 'goToGoogle'])->name('goToGoogle');
-Route::get('/login/gotogooglestore', [SocialiteLogin::class, 'goToGoogleStore'])->name('goToGoogleStore');
-//Route::get('/login/storePasswordSet',[SocialiteLogin::class,'storePasswordSet'])->name('storePasswordSet');
-
-//started with Socialite linkedin
-Route::get('/login/gotolinkedin', [SocialiteLogin::class, 'goToLinkedin'])->name('goToLinkedin');
-Route::get('/login/gotolinkedinstore', [SocialiteLogin::class, 'goToLinkedinStore'])->name('goToLinkedinStore');
 
 
 Route::group(['middleware' => ['verified']], function () {

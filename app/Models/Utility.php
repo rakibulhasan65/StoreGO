@@ -2002,7 +2002,7 @@ Order Date:" . ' ' . self::dateFormat($order->created_at));
                 );
             }
             // return \Storage::disk($settings['storage_setting'])->url($path);
-            return url('/').\Storage::disk($settings['storage_setting'])->url($path);
+            return 'https://www.neermata.com'.\Storage::disk($settings['storage_setting'])->url($path);
         } catch (\Throwable $th) {
             return '';
         }
