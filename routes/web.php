@@ -100,7 +100,6 @@ Route::get('login/{lang?}', function () {
     $lang = 'en';
     return view('auth.login', compact('lang'));
 
-
 })->name('login');
 require __DIR__ . '/auth.php';
 

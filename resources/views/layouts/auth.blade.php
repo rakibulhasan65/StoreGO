@@ -5,7 +5,7 @@ $settings = Utility::settings();
 $color = 'theme-3';
 if (!empty($setting['color'])) {
     $color = $setting['color'];
-  
+
 }
 $company_logo = \App\Models\Utility::GetLogo();
 $logo=\App\Models\Utility::get_file('uploads/logo/');
@@ -17,7 +17,7 @@ $logo=\App\Models\Utility::get_file('uploads/logo/');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="StoreGo - Business Ecommerce">
-    <title>{{(\App\Models\Utility::getValByName('title_text')) ? \App\Models\Utility::getValByName('title_text') : config('app.name', 'StoreGo SaaS')}} - @yield('page-title')</title>
+    <title>{{(\App\Models\Utility::getValByName('title_text')) ? \App\Models\Utility::getValByName('title_text') : config('app.name', 'Neermata')}} - @yield('page-title')</title>
 
     <link rel="icon" href="{{asset(Storage::url('uploads/logo/')).'/favicon.png'}}" type="image/png">
      <!-- CSS Libraries -->
@@ -92,7 +92,7 @@ $logo=\App\Models\Utility::get_file('uploads/logo/');
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-6">
-                            &copy; {{ __('Copyright') }} {{ Utility::getValByName('footer_text') ? Utility::getValByName('footer_text') : config('app.name', 'LeadGo') }} {{ date('Y') }}  
+                            &copy; {{ __('Copyright') }} {{ Utility::getValByName('footer_text') ? Utility::getValByName('footer_text') : config('app.name', 'LeadGo') }} {{ date('Y') }}
                         </div>
                     </div>
                 </div>

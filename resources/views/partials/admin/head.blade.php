@@ -5,10 +5,10 @@ $settings = Utility::settings();
 
 @endphp
 <head>
-    <title> 
-        {{ \App\Models\Utility::getValByName('title_text') ? \App\Models\Utility::getValByName('title_text') : env('APP_NAME', 'StoreGo SaaS') }} - @yield('page-title')
+    <title>
+        {{ \App\Models\Utility::getValByName('title_text') ? \App\Models\Utility::getValByName('title_text') : env('APP_NAME', 'Neermata') }} - @yield('page-title')
     </title>
-    
+
     <meta charset="utf-8" dir="{{ $settings['SITE_RTL'] == 'on' ? 'rtl' : '' }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,7 +23,7 @@ $settings = Utility::settings();
     @else
         <link rel="icon" href="{{ $logo . '/' . (isset($favicon) && !empty($favicon) ? $favicon : 'favicon.png') }}" type="image/x-icon" />
     @endif
-    
+
 
     <!-- font css -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }}">

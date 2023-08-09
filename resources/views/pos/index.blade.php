@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        {{ !empty($companySettings['header_text']) ? $companySettings['header_text']->value : config('app.name', 'Storego Saas') }}
+        {{ !empty($companySettings['header_text']) ? $companySettings['header_text']->value : config('app.name', 'Neermata') }}
         - {{ __('POS') }}</title>
 
     <link rel="icon"
@@ -135,7 +135,7 @@
                                     @if(session($lastsegment) && !empty(session($lastsegment)) && count(session($lastsegment)) > 0)
                                         @foreach(session($lastsegment) as $id => $details)
                                             @php
-                                          
+
                                                 $product = \App\Models\Product::find($details['id']);
                                                 $image_url = !empty($product->is_cover) ? $product->is_cover : 'default.jpg';
                                                 $total = $total + (float) $details['subtotal'];
@@ -156,7 +156,7 @@
                                                             <input type="button" value="+" class="plus">
                                                         </span>
                                                     </td>
-                                                
+
                                                     <td>
                                                         @if(!empty($product->product_tax))
                                                             @php
@@ -169,10 +169,10 @@
                                                             -
                                                         @endif
                                                     </td>
-                                                
+
                                                     {{--  <td class="price text-right">{{  \App\Models\Utility::priceFormat($details['price']) }}</td>  --}}
                                                     <td class="price text-right">{{ \App\Models\Utility::priceFormat($details['price']) }}</td>
-                                                    
+
                                                     <td class="col-sm-3 mt-2">
                                                         {{--  <span class="subtotal">{{  \App\Models\Utility::priceFormat($details['subtotal']) }}</span>  --}}
                                                         <span class="subtotal">{{ \App\Models\Utility::priceFormat($details['subtotal']) }}</span>
@@ -216,7 +216,7 @@
                                                 <h6 class="mb-0 text-dark">{{__('Sub Total')}} :</h6>
                                                 <h6 class="mb-0 text-dark subtotal_price" id="displaytotal">{{  \App\Models\Utility::priceFormat($total) }}</h6>
                                             </div>
-                                            
+
                                         <div class="d-flex align-items-center justify-content-md-end  justify-content-flex-start">
                                             <h6 class="">{{__('Total')}} :</h6>
                                             <h6 class="totalamount" >{{ \App\Models\Utility::priceFormat($total) }}</h6>
@@ -242,7 +242,7 @@
                                         {!! Form::close() !!}
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
 
 
                         </div>
@@ -334,7 +334,7 @@
             getProductCategories();
 
         });
-    
+
         if ($('#searchproduct').length > 0) {
             var url = $('#searchproduct').data('url');
             var store_id = $( "#store_id" ).val();
@@ -349,7 +349,7 @@
         $( '.customer_select' ).change(function() {
             $( "#vc_name_hidden" ).val($(this).val());
         });
-        
+
 
 
         $(document).on('click', '#clearinput', function (e) {
@@ -392,20 +392,20 @@
                 type: 'GET',
                 url: '{{ route('product.categories') }}',
                 success: function (data) {
-                  
+
                     $('#categories-listing').html(data);
                 }
             });
         }
 
         $(document).on('click', '.toacart', function () {
-           
+
             var sum = 0
             $.ajax({
                 url: $(this).data('url'),
 
                 success: function (data) {
-                    
+
                     if (data.code == '200') {
 
                         $('#displaytotal').text(addCommas(data.product.subtotal));
@@ -422,13 +422,13 @@
 
                        $('.discount').val('');
                         }
-                        
+
                         $('#tbody').append(data.carthtml);
                         $('.no-found').addClass('d-none');
                         $('.carttable #product-id-' + data.product.id + ' input[name="quantity"]').val(data.product.quantity);
                         $('#btn-pur button').removeAttr('disabled');
                         $('.btn-empty button').addClass('btn-clear-cart');
-                       
+
                         }
                 },
                 error: function (data) {
@@ -439,7 +439,7 @@
         });
 
         $(document).on('change keyup', '#carthtml input[name="quantity"]', function (e) {
-           
+
             e.preventDefault();
             var ele = $(this);
             var sum = 0;
@@ -505,7 +505,7 @@
                     method: "DELETE",
                     data: {
                         id: ele.attr("data-id"),
-                        
+
                     },
                     success: function (data) {
                         if (data.code == '200') {
@@ -566,11 +566,11 @@
                     ele.remove();
                 },
                 success: function (data) {
-                   
+
                     if (data.code == 200) {
                         show_toastr('success', data.success, 'success')
                     }
-                   
+
                 },
                 error: function (data) {
                     data = data.responseJSON;

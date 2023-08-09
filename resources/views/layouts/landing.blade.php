@@ -453,7 +453,7 @@
 
         <div class="packageCetegory p-1">
             <button class="btn monthlyBtn">Pay Month</button>
-            <button class="btn yearlyBtn">Pay Yearly (save 25%)</button>
+            <button class="btn sixMonthBtn">6 Month (save 25%)</button>
         </div>
 
         <div class="row justify-content-center">
@@ -467,7 +467,7 @@
                     <div class="card-body">
                         <span class="price-badge bg-primary">Basic Package</span>
                         <span class="mb-4 f-w-600 p-price">$<span id="basicPackage"></span><small
-                                class="text-sm packageCategory">/month</small></span>
+                                class="text-sm">/month</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -490,11 +490,11 @@
                             </li>
                         </ul>
                         <div class="d-grid text-center">
-                            <button
-                                class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5">
+                            <a href="{{url('dashboard')}}"
+                                class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5 text-white">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -509,7 +509,7 @@
                     <div class="card-body">
                         <span class="price-badge">Neermata Package</span>
                         <span class="mb-4 f-w-600 p-price">$<span id="neermataPackage"></span><small
-                                class="text-sm packageCategory">/month</small></span>
+                                class="text-sm">/month</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -537,11 +537,11 @@
                             </li>
                         </ul>
                         <div class="d-grid text-center">
-                            <button
+                            <a href="{{url('dashboard')}}"
                                 class="btn mb-3 btn-light d-flex justify-content-center align-items-center mx-sm-5">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -556,7 +556,7 @@
                     <div class="card-body">
                         <span class="price-badge bg-primary">Advanced Package</span>
                         <span class="mb-4 f-w-600 p-price">$<span id="advancePackage"></span><small
-                                class="text-sm packageCategory">/month</small></span>
+                                class="text-sm">/month</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -594,11 +594,11 @@
                             </li>
                         </ul>
                         <div class="d-grid text-center">
-                            <button
+                            <a href="{{url('dashboard')}}"
                                 class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -818,7 +818,7 @@
 
 
 <!-- Required Js -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="{{asset('landing/js/ajax.js')}}"></script>
 <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/wow.min.js') }}"></script>
@@ -902,54 +902,49 @@
             const basicPackage = 50;
             const neermataPackage = 100;
             const advancePackage = 200;
-            const packageCategory = "month";
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
-            $(".packageCategory").html(packageCategory);
             $(this).css({"background-color": "#0a2842", "color": "white"});
-            $(".yearlyBtn").css({"background-color": "#ffff", "color": "black"})
+            $(".sixMonthBtn").css({"background-color": "#ffff", "color": "black"})
         });
         $(".monthlyBtn").show(function () {
             const basicPackage = 50;
             const neermataPackage = 100;
             const advancePackage = 200;
-            const packageCategory = "month";
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
-            $(".packageCategory").html(packageCategory);
             $(this).css({"background-color": "#0a2842", "color": "white"});
-            $(".yearlyBtn").css({"background-color": "#ffff", "color": "black"})
+            $(".sixMonthBtn").css({"background-color": "#ffff", "color": "black"})
         });
 
-        $(".yearlyBtn").on("click", function () {
+        $(".sixMonthBtn").on("click", function () {
             const basicPackage = 200;
             const neermataPackage = 400;
             const advancePackage = 600;
-            const packageCategory = "year";
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
-            $(".packageCategory").html(packageCategory);
             $(this).css({"background-color": "#0a2842", "color": "white"});
             $(".monthlyBtn").css({"background-color": "#ffff", "color": "#0a2842"})
 
         });
 
         if (window.matchMedia('(max-width: 768px)').matches) {
-            $(".yearlyBtn").hide();
+            $(".sixMonthBtn").hide();
             $(".monthlyBtn").on("click", function () {
-                $(".yearlyBtn").show();
-                $(".yearlyBtn").css({"background-color": "#0a2842", "color": "white"});
+                $(".sixMonthBtn").show();
+                $(".sixMonthBtn").css({"background-color": "#0a2842", "color": "white"});
                 $(".monthlyBtn").hide();
             });
-            $(".yearlyBtn").on("click", function () {
+            $(".sixMonthBtn").on("click", function () {
                 $(".monthlyBtn").show();
                 $(".monthlyBtn").css({"background-color": "#0a2842", "color": "white"});
-                $(".yearlyBtn").hide();
+                $(".sixMonthBtn").hide();
             });
         }
+
     });
 </script>
 @if ($settings['enable_cookie'] == 'on')

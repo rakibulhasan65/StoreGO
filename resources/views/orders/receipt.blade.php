@@ -142,9 +142,9 @@ $imgpath=\App\Models\Utility::get_file('uploads/store_logo/');
     <center id="top">
         <div class="logo">
             @php
-                //$logo_url = 'uploads/logo.png';
+                $logo_url = 'uploads/logo.png';
                 $logo_url = 'uploads/store_logo/invoice_logo.png';
-                //$short_logo_url = 'uploads/logo-short.png';
+                $short_logo_url = 'uploads/logo-short.png';
             @endphp
             <center>
                 @if(isset($store['invoice_logo']) && $store['invoice_logo'] !=='')

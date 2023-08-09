@@ -6,7 +6,6 @@ Support: [support link]
 File: style.css
 =========================================================================
 =================================================================================== */
-
 body {
     margin: 0;
     overflow-x: hidden;
@@ -156,7 +155,7 @@ header.price-header {
 
 .packageCetegory {
     margin: 0 auto;
-    width: 29%;
+    width: 28%;
     border: 2px solid #6fd943;
     border-radius: 50px;
     overflow: hidden;
@@ -172,9 +171,21 @@ header.price-header {
     margin-right: 5px;
 }
 
-.packageCetegory .yearlyBtn {
+.packageCetegory .sixMonthBtn {
     border-radius: 50px;
 }
+
+/* Pricing Section media query */
+
+@media only screen and (max-width: 768px) {
+    .packageCetegory .monthlyBtn{
+        width: 100%;
+    }
+    .packageCetegory .sixMonthBtn{
+        width: 100%;
+    }
+}
+
 
 .dashboard-block {
     position: relative;

@@ -26,27 +26,28 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         if(\Auth::user()->can('Manage Orders')){
             if (Auth::user()->type == 'super admin') {
                 $user  = \Auth::user();
                 $store = Store::where('id', $user->current_store)->first();
-    
+
                 $orders = Order::orderBy('id', 'DESC')->get();
             } else {
                 $user  = \Auth::user();
                 $store = Store::where('id', $user->current_store)->first();
-    
+
                 $orders = Order::orderBy('id', 'DESC')->where('user_id', $store->id)->get();
             }
-    
+
             return view('orders.index', compact('orders'));
         }
         else{
             return redirect()->back()->with('error', 'Permission denied.');
         }
-       
+
     }
 
     /**
@@ -106,7 +107,7 @@ class OrderController extends Controller
                                     $total_taxs += $sub_tax;
                                 }
                             }
-        
+
                             $totalprice  = $product->variant_price * $product->quantity + $total_taxs;
                             $subtotal    = $product->variant_price * $product->quantity;
                             $sub_total   += $subtotal;
@@ -117,7 +118,7 @@ class OrderController extends Controller
                                     $sub_tax    = ($product->price * $product->quantity * $tax->tax) / 100;
                                     $total_taxs += $sub_tax;
                                 }
-                                
+
                             }
                             // else{
                             //     $total_taxs = 0;
@@ -128,9 +129,9 @@ class OrderController extends Controller
                             // $grand_total += $totalprice;
                             $grand_total = $sub_total + $total_taxs;
                         }
-                    
+
                     }
-                    
+
                     if (!empty($order->coupon_json)) {
                         $coupon = json_decode($order->coupon_json);
                     }
@@ -150,8 +151,8 @@ class OrderController extends Controller
                 }
                 $store_payment_setting = \Utility::getPaymentSetting($store->id);
                 $order_id              = Crypt::encrypt($order->id);
-        
-        
+
+
                 return view('orders.view', compact('store_payment_setting', 'discount_price', 'order', 'store', 'grand_total', 'order_products', 'sub_total', 'total_taxs', 'user_details', 'order_id', 'shipping_data', 'location_data', 'discount_value'));
             }
             catch(\Exception $e){
@@ -161,8 +162,8 @@ class OrderController extends Controller
         else{
             return redirect()->back()->with('error', 'Permission denied.');
         }
-       
-        
+
+
     }
 
     /**
@@ -228,7 +229,7 @@ class OrderController extends Controller
             {
                 $order_id = Crypt::encrypt($order->id);
                 $resp  = Utility::sendEmailTemplate('Status Change', $order_email, $dArr, $store, $order_id);
-               
+
             }
             catch(\Exception $e)
             {
@@ -267,7 +268,7 @@ class OrderController extends Controller
                 $Products_order = json_decode($order->product);
                 foreach($Products_order as $PurchasedProduct)
                 {
-                    
+
                     $product = Product::where('id',$PurchasedProduct->product_id)->first();
                     $product->quantity = $product->quantity + $PurchasedProduct->quantity;
                     $product->save();
