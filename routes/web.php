@@ -59,7 +59,6 @@ Route::get('/login/gotogooglestore', [SocialiteLogin::class, 'goToGoogleStore'])
 Route::get('/login/gotolinkedin', [SocialiteLogin::class, 'goToLinkedin'])->name('goToLinkedin');
 Route::get('/login/gotolinkedinstore', [SocialiteLogin::class, 'goToLinkedinStore'])->name('goToLinkedinStore');
 
-
 Route::get('login/{lang?}', function () {
 
     $url = \Request::url();
@@ -101,8 +100,8 @@ Route::get('login/{lang?}', function () {
     return view('auth.login', compact('lang'));
 
 })->name('login');
-require __DIR__ . '/auth.php';
 
+require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['verified']], function () {
 

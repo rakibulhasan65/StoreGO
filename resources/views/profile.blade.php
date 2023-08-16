@@ -52,9 +52,9 @@ $profile=\App\Models\Utility::get_file('uploads/profile/');
                                                             <div class=" setting-card">
                                                                 <h4>{{__('Picture')}}</h4>
                                                                 <div class="logo-content mt-4 d-flex justify-content-center">
-                                                                    {{-- <img src="{{(!empty($userDetail->avatar))? $profile.'/'.$userDetail->avatar : $profile.'/avatar.png'}}"
-                                                                        class=" rounded-circle-avatar" width="100px"> --}}
-                                                                        <img src="{{ !empty($users->avatar) ? $profile . '/' . $users->avatar : $profile . '/avatar.png' }}" id="blah" width="100px" class="rounded-circle-avatar"/>
+{{--                                                                     <img src="{{(!empty($userDetail->avatar))? $profile.'/'.$userDetail->avatar : $profile.'/avatar.png'}}"--}}
+{{--                                                                        class=" rounded-circle-avatar" width="100px">--}}
+                                                                        <img src="{{ !empty($users->avatar) ? $profile . $users->avatar : $profile . '/avatar.png' }}" id="blah" width="100px" class="rounded-circle-avatar"/>
                                                                 </div>
                                                                 <div class="choose-files mt-4">
                                                                     <label for="file-1">

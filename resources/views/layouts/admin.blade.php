@@ -53,7 +53,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
                             <div class="col-12 text-end">
                                 @yield('action-btn')
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </div>
             </div>

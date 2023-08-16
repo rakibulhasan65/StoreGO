@@ -37,10 +37,15 @@ class PlanController extends Controller
                         ]
                     )->join('users', 'plan_orders.user_id', '=', 'users.id')->orderBy('plan_orders.created_at', 'DESC')->where('users.id', '=', $objUser->id)->get();
                 }
-    
+
                 $plans = Plan::get();
                 $admin_payments_setting = Utility::getAdminPaymentSetting();
                 return view('plans.index', compact('plans', 'orders', 'admin_payments_setting'));
+
+                return response()->json([
+                    "success"=>"200",
+                    'data'=>$plans
+                ]);
             // } else {
             //     return redirect()->route('dashboard');
             // }
@@ -48,7 +53,7 @@ class PlanController extends Controller
         else{
             return redirect()->back()->with('error', 'Permission denied.');
         }
-        
+
     }
 
     /**
@@ -92,7 +97,7 @@ class PlanController extends Controller
                     || (isset($admin_payments_setting['is_mercado_enabled']) && $admin_payments_setting['is_mercado_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_mollie_enabled']) && $admin_payments_setting['is_mollie_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_coingate_enabled']) && $admin_payments_setting['is_coingate_enabled'] == 'on')
-                    || (isset($admin_payments_setting['is_paytm_enabled']) && $admin_payments_setting['is_paytm_enabled'] == 'on') 
+                    || (isset($admin_payments_setting['is_paytm_enabled']) && $admin_payments_setting['is_paytm_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_skrill_enabled']) && $admin_payments_setting['is_skrill_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_paymentwall_enabled']) && $admin_payments_setting['is_paymentwall_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_toyyibpay_enabled']) && $admin_payments_setting['is_toyyibpay_enabled'] == 'on')
@@ -220,7 +225,7 @@ class PlanController extends Controller
                     || (isset($admin_payments_setting['is_mercado_enabled']) && $admin_payments_setting['is_mercado_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_mollie_enabled']) && $admin_payments_setting['is_mollie_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_coingate_enabled']) && $admin_payments_setting['is_coingate_enabled'] == 'on')
-                    || (isset($admin_payments_setting['is_paytm_enabled']) && $admin_payments_setting['is_paytm_enabled'] == 'on') 
+                    || (isset($admin_payments_setting['is_paytm_enabled']) && $admin_payments_setting['is_paytm_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_skrill_enabled']) && $admin_payments_setting['is_skrill_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_paymentwall_enabled']) && $admin_payments_setting['is_paymentwall_enabled'] == 'on')
                     || (isset($admin_payments_setting['is_toyyibpay_enabled']) && $admin_payments_setting['is_toyyibpay_enabled'] == 'on')
