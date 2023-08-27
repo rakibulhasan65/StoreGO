@@ -108,7 +108,7 @@
 <header id="home" class="bg-primary">
     <div class="container">
         <div class="row align-items-center justify-content-between">
-            <div class="col-sm-6">
+            <div class="col-sm-6 bannerTextWhite">
                 <h1 class="text-white mb-sm-4 wow animate__fadeInLeft" data-wow-delay="0.2s">
                     Neermata
                 </h1>
@@ -173,7 +173,7 @@
 
                 </div>
             </div>
-            <div class="col-auto">
+            <div class="col-auto happyClientImg">
                 <div class="wow animate__fadeInRight mobile-widget" data-wow-delay="0.6s">
                     {{-- @if ($setting['cust_darklayout'] == 'on')
                     <img src="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}" alt=""
@@ -188,7 +188,7 @@
 
                 </div>
             </div>
-            <div class="col-auto">
+            <div class="col-auto happyClientImg">
                 <div class="wow animate__fadeInRight mobile-widget" data-wow-delay="0.8s">
                     {{-- @if ($setting['cust_darklayout'] == 'on')
                     <img src="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}" alt=""
@@ -203,7 +203,7 @@
 
                 </div>
             </div>
-            <div class="col-auto">
+            <div class="col-auto happyClientImg">
                 <div class="wow animate__fadeInRight mobile-widget" data-wow-delay="1s">
                     {{-- @if ($setting['cust_darklayout'] == 'on')
                     <img src="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}" alt=""
@@ -491,7 +491,7 @@
                         </ul>
                         <div class="d-grid text-center">
                             <a href="{{url('dashboard')}}"
-                                class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5 text-white">
+                               class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5 text-white">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
                             </a>
@@ -538,7 +538,7 @@
                         </ul>
                         <div class="d-grid text-center">
                             <a href="{{url('dashboard')}}"
-                                class="btn mb-3 btn-light d-flex justify-content-center align-items-center mx-sm-5">
+                               class="btn mb-3 btn-light d-flex justify-content-center align-items-center mx-sm-5">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
                             </a>
@@ -595,7 +595,7 @@
                         </ul>
                         <div class="d-grid text-center">
                             <a href="{{url('dashboard')}}"
-                                class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5">
+                               class="btn mb-3 btn-primary d-flex justify-content-center align-items-center mx-sm-5">
                                 Try for free
                                 <i class="ti ti-chevron-right ms-2"></i>
                             </a>
@@ -777,7 +777,7 @@
 <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 footerImg">
 
                 <img
                     src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') }}"
@@ -792,7 +792,7 @@
                         class="img-fluid" />
                 @endif --}}
             </div>
-            <div class="col-lg-6 col-sm-12 text-end">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-end footerCopyRightText">
                 <p class="text-body">{{ __('Copyright') }}
                     {{ Utility::getValByName('footer_text') ? Utility::getValByName('footer_text') : config('app.name', 'StoreGo') }}
                     {{ date('Y') }}</p>
@@ -801,9 +801,10 @@
     </div>
 </section>
 <!-- [ dashboard ] End -->
+<button id="scrollButton"><i class="fas fa-arrow-up"></i></button>
 
 <!-- [ whatsapp_plugin ] Start -->
-<div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:10px;right:15px;">
+<div class="whatsapp_integration" style="width: 60px;height:60px;position:fixed;bottom:5px;right:50px;">
     <a href="https://wa.me/+8801763155595?text=Hello">
         <img src="{{ asset('assets/img/whatsapp.png') }}" alt="whatsapp" style="width: 60px;height:60px;"/>
     </a>
@@ -870,10 +871,10 @@
     // Start [ Menu hide/show on scroll ]
     let ost = 0;
     document.addEventListener("scroll", function () {
-        let cOst = document.documentElement.scrollTop;
-        if (cOst == 0) {
+        let scrollTop = document.documentElement.scrollTop;
+        if (scrollTop == 0) {
             document.querySelector(".navbar").classList.add("top-nav-collapse");
-        } else if (cOst > ost) {
+        } else if (scrollTop > ost) {
             document.querySelector(".navbar").classList.add("top-nav-collapse");
             document.querySelector(".navbar").classList.remove("default");
         } else {
@@ -882,7 +883,7 @@
                 .querySelector(".navbar")
                 .classList.remove("top-nav-collapse");
         }
-        ost = cOst;
+        ost = scrollTop;
     });
     // End [ Menu hide/show on scroll ]
     var wow = new WOW({
@@ -945,8 +946,47 @@
             });
         }
 
+        const navigation = document.querySelector('.navbar');
+        let prevScrollPosY = window.pageYOffset;
+
+        // Function to toggle navigation visibility based on scroll direction
+        function toggleNavigation() {
+            const currentScrollPosY = window.pageYOffset;
+            if (prevScrollPosY > currentScrollPosY) {
+                navigation.classList.remove('navigation-hidden');
+            } else {
+                navigation.classList.add('navigation-hidden');
+            }
+            prevScrollPosY = currentScrollPosY;
+        }
+
+        // Attach the function to the scroll event
+        window.addEventListener('scroll', toggleNavigation);
+
+
     });
 </script>
+
+
+<script>
+    // Get the button element
+    let scrollButton = document.getElementById("scrollButton");
+    // Show the button when the user scrolls down 20px from the top of the document
+    window.onscroll = function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollButton.style.display = "block";
+        } else {
+            scrollButton.style.display = "none";
+        }
+    };
+    // Scroll to the top of the page when the button is clicked
+    scrollButton.addEventListener("click", function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera+
+
+    });
+</script>
+
 @if ($settings['enable_cookie'] == 'on')
     @include('layouts.cookie_consent')
 @endif

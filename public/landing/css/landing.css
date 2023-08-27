@@ -100,7 +100,7 @@ section {
 }
 
 .navbar.default.top-nav-collapse {
-    /* background: transparent;*/
+     /*background: transparent;*/
     box-shadow: none;
 }
 
@@ -419,3 +419,49 @@ header.price-header {
         font-size: 11px;
     }
 }
+
+@media only screen and (max-width: 576px ){
+    .bannerTextWhite{
+        margin-top: 3.5rem;
+    }
+}
+
+@media only screen and (max-width: 768px ){
+    .happyClientImg{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 576px ){
+    .footerImg{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .footerCopyRightText{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+/* Class to hide the navigation */
+.navigation-hidden {
+    transform: translateY(-100%); /* Move the navigation above the viewport */
+}
+
+ #scrollButton {
+     height: 30px;
+     display: none;
+     position: fixed;
+     bottom: 20px;
+     right: 15px;
+     z-index: 99;
+     font-size: 18px;
+     border: none;
+     outline: none;
+     background-color: #555;
+     color: white;
+     cursor: pointer;
+     /*padding: 10px;*/
+     border-radius: 4px;
+ }
