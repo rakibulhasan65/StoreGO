@@ -956,17 +956,25 @@
                 navigation.classList.remove('navigation-hidden');
             } else {
                 navigation.classList.add('navigation-hidden');
+                prevScrollPosY = currentScrollPosY;
             }
-            prevScrollPosY = currentScrollPosY;
+
         }
 
         // Attach the function to the scroll event
         window.addEventListener('scroll', toggleNavigation);
 
-
     });
 </script>
+<script>
+    const navbar = document.querySelector('#navbarTogglerDemo01');
+    document.addEventListener("click", function(event) {
+        if (!navbar.contains(event.target)) {
+            navbar.classList.remove('show')
+        }
+    });
 
+</script>
 
 <script>
     // Get the button element
