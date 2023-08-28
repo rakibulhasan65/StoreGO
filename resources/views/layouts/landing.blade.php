@@ -466,8 +466,8 @@
                 ">
                     <div class="card-body">
                         <span class="price-badge bg-primary">Basic Package</span>
-                        <span class="mb-4 f-w-600 p-price">$<span id="basicPackage"></span><small
-                                class="text-sm">/month</small></span>
+                        <span class="mb-4 f-w-600 p-price">৳<span id="basicPackage"></span><small
+                                class="text-sm">BDT</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -508,8 +508,8 @@
                 ">
                     <div class="card-body">
                         <span class="price-badge">Neermata Package</span>
-                        <span class="mb-4 f-w-600 p-price">$<span id="neermataPackage"></span><small
-                                class="text-sm">/month</small></span>
+                        <span class="mb-4 f-w-600 p-price">৳<span id="neermataPackage"></span><small
+                                class="text-sm">BDT</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -555,8 +555,8 @@
                 ">
                     <div class="card-body">
                         <span class="price-badge bg-primary">Advanced Package</span>
-                        <span class="mb-4 f-w-600 p-price">$<span id="advancePackage"></span><small
-                                class="text-sm">/month</small></span>
+                        <span class="mb-4 f-w-600 p-price">৳<span id="advancePackage"></span><small
+                                class="text-sm">BDT</small></span>
                         <p class="mb-0">
                             You have Free Unlimited Updates and <br/>
                             Premium Support on each package.
@@ -900,9 +900,9 @@
     // Start [ Price Button Action Event ]
     $(document).ready(function () {
         $(".monthlyBtn").on("click", function () {
-            const basicPackage = 50;
-            const neermataPackage = 100;
-            const advancePackage = 200;
+            const basicPackage = 5000;
+            const neermataPackage = 10000;
+            const advancePackage = 20000;
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
@@ -910,9 +910,9 @@
             $(".sixMonthBtn").css({"background-color": "#ffff", "color": "black"})
         });
         $(".monthlyBtn").show(function () {
-            const basicPackage = 50;
-            const neermataPackage = 100;
-            const advancePackage = 200;
+            const basicPackage = 10000;
+            const neermataPackage = 20000;
+            const advancePackage = 30000;
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
@@ -921,9 +921,9 @@
         });
 
         $(".sixMonthBtn").on("click", function () {
-            const basicPackage = 200;
-            const neermataPackage = 400;
-            const advancePackage = 600;
+            const basicPackage = 30000;
+            const neermataPackage = 60000;
+            const advancePackage = 100000;
             $("#basicPackage").html(basicPackage);
             $("#neermataPackage").html(neermataPackage);
             $("#advancePackage").html(advancePackage);
