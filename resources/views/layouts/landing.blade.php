@@ -127,9 +127,20 @@
                             class="fas fa-shopping-cart me-2"></i>Buy now</a>
                 </div>
             </div>
-            <div class="col-sm-5">
-                <img src="{{ asset('assets/images/front/header-mokeup.svg') }}" alt="Datta Able Admin Template"
-                     class="img-fluid header-img wow animate__fadeInRight" data-wow-delay="0.2s"/>
+            <div class="col-sm-5 align-items-center justify-content-between position-relative">
+                <div class="business-image">
+                    <img src="{{ asset('assets/images/front/header-mokeup.svg') }}" alt="Datta Able Admin Template"
+                         class="img-fluid header-img wow animate__fadeInRight" data-wow-delay="0.2s"/>
+                </div>
+                <div class="business-video">
+                    <a id="play-video" class="video-play-button" href="#">
+                        <span></span>
+                    </a>
+                    <div id="video-overlay" class="video-overlay">
+                        <a class="video-overlay-close">&times;</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -946,16 +957,16 @@
             });
         }
 
-        const navigation = document.querySelector('.navbar');
+        const navigation = document.querySelector('#navbarTogglerDemo01');
         let prevScrollPosY = window.pageYOffset;
 
         // Function to toggle navigation visibility based on scroll direction
         function toggleNavigation() {
             const currentScrollPosY = window.pageYOffset;
-            if (prevScrollPosY > currentScrollPosY) {
-                navigation.classList.remove('navigation-hidden');
+            if (prevScrollPosY > currentScrollPosY || prevScrollPosY < currentScrollPosY) {
+                navigation.classList.remove('show')
             } else {
-                navigation.classList.add('navigation-hidden');
+                navigation.classList.add('show')
                 prevScrollPosY = currentScrollPosY;
             }
 
@@ -968,7 +979,7 @@
 </script>
 <script>
     const navbar = document.querySelector('#navbarTogglerDemo01');
-    document.addEventListener("click", function(event) {
+    document.addEventListener("click", function (event) {
         if (!navbar.contains(event.target)) {
             navbar.classList.remove('show')
         }
@@ -993,6 +1004,29 @@
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera+
 
     });
+</script>
+
+<script>
+    $('#play-video').on('click', function (e) {
+        e.preventDefault();
+        $('#video-overlay').addClass('open');
+        $("#video-overlay").append('<iframe width="980" height="515" src="https://www.youtube.com/embed/DXzDXsXKjFk" frameborder="0" allowfullscreen></iframe>');
+    });
+
+    $('.video-overlay, .video-overlay-close').on('click', function (e) {
+        e.preventDefault();
+        close_video();
+    });
+
+    $(document).keyup(function (e) {
+        if (e.keyCode === 27) {
+            close_video();
+        }
+    });
+
+    function close_video() {
+        $('.video-overlay.open').removeClass('open').find('iframe').remove();
+    };
 </script>
 
 @if ($settings['enable_cookie'] == 'on')
