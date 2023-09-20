@@ -38,7 +38,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-       
+
         if (!file_exists(storage_path() . "/installed")) {
             header('location:install');
             die;
@@ -46,16 +46,16 @@ class DashboardController extends Controller
         $uri = url()->full();
         $segments = explode('/', str_replace(''.url('').'', '', $uri));
         $segments = $segments[1] ?? null;
-        
+
         if($segments == null) {
             $local = parse_url(config('app.url'))['host'];
             // Get the request host
             $remote = request()->getHost();
             // Get the remote domain
-            
+
             // remove WWW
             $remote = str_replace('www.', '', $remote);
-            
+
 
             $store = Store::where('domains', '=', $remote)->where('enable_domain', 'on')->first();
             // If the domain exists
@@ -70,10 +70,10 @@ class DashboardController extends Controller
             if($store && $store->enable_domain == 'on') {
                 return app('App\Http\Controllers\StoreController')->storeSlug($store->slug);
             }
-            
+
             $sub_store = Store::where('subdomain', '=', $remote)->where('enable_subdomain', 'on')->first();
             if ($sub_store && $sub_store->enable_subdomain == 'on') {
-            
+
                 return app('App\Http\Controllers\StoreController')->storeSlug($sub_store->slug);
             }
 
@@ -81,7 +81,7 @@ class DashboardController extends Controller
         if (\Auth::check()) {
             if(\Auth::user()->can('Manage Dashboard')){
                 if (\Auth::user()->type == 'super admin') {
-                    
+
                     $user = \Auth::user();
                     $user['total_user'] = $user->countCompany();
                     $user['total_paid_user'] = $user->countPaidCompany();
@@ -146,10 +146,10 @@ class DashboardController extends Controller
                     }
                 }
             }
-       
-       
-      
-       
+
+
+
+
     }
 
     public function getOrderChart($arrParam)
@@ -170,7 +170,7 @@ class DashboardController extends Controller
         $arrTask['label'] = [];
         $arrTask['data'] = [];
         foreach ($arrDuration as $date => $label) {
-        
+
             if (Auth::user()->type == 'Owner') {
                 $data = Order::select(\DB::raw('count(*) as total'))->where('user_id', $userstore->store_id)->whereDate('created_at', '=', $date)->first();
             } else {

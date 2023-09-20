@@ -889,9 +889,9 @@ class Utility extends Model
             $settings = Store::where('id', $user)->first();
 
             if ($settings['currency_symbol_position'] == "pre" && $settings['currency_symbol_space'] == "with") {
-                return $settings['currency'] . ' ' . number_format($price, isset($settings->decimal_number) ? $settings->decimal_number : 2);
+                return  number_format($price, isset($settings->decimal_number) ? $settings->decimal_number : 2).' '.$settings['currency'];
             } elseif ($settings['currency_symbol_position'] == "pre" && $settings['currency_symbol_space'] == "without") {
-                return $settings['currency'] . number_format($price, isset($settings->decimal_number) ? $settings->decimal_number : 2);
+                return  number_format($price, isset($settings->decimal_number) ? $settings->decimal_number : 2).' '.$settings['currency'];
             } elseif ($settings['currency_symbol_position'] == "post" && $settings['currency_symbol_space'] == "with") {
                 return number_format($price, isset($settings->decimal_number) ? $settings->decimal_number : 2) . ' ' . $settings['currency'];
             } elseif ($settings['currency_symbol_position'] == "post" && $settings['currency_symbol_space'] == "without") {
@@ -907,9 +907,9 @@ class Utility extends Model
                 $store = Store::where('slug', $slug)->first();
 
                 if ($store['currency_symbol_position'] == "pre" && $store['currency_symbol_space'] == "with") {
-                    return $store['currency'] . ' ' . number_format($price, isset($store->decimal_number) ? $store->decimal_number : 2);
+                    return number_format($price, isset($store->decimal_number) ? $store->decimal_number : 2).' '.$store['currency'] ;
                 } elseif ($store['currency_symbol_position'] == "pre" && $store['currency_symbol_space'] == "without") {
-                    return $store['currency'] . number_format($price, isset($store->decimal_number) ? $store->decimal_number : 2);
+                    return number_format($price, isset($store->decimal_number) ? $store->decimal_number : 2).' '.$store['currency'] ;
                 } elseif ($store['currency_symbol_position'] == "post" && $store['currency_symbol_space'] == "with") {
                     return number_format($price, isset($store->decimal_number) ? $store->decimal_number : 2) . ' ' . $store['currency'];
                 } elseif ($store['currency_symbol_position'] == "post" && $store['currency_symbol_space'] == "without") {
