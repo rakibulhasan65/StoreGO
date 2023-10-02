@@ -48,7 +48,8 @@ class SettingController extends Controller
                     );
 
                     $serverIp = gethostbyname($serverName);
-                    if ($serverIp == $_SERVER['SERVER_ADDR']) {
+
+                    if (isset( $_SERVER['SERVER_ADDR'])) {
                         $serverIp;
                     } else {
                         $serverIp = request()->server('SERVER_ADDR');
