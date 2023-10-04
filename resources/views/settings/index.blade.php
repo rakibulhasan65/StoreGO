@@ -2129,16 +2129,16 @@
                                                         data-toggle="select" id="site_date_format">
                                                         <option value="M j, Y"
                                                             @if (@$settings['site_date_format'] == 'M j, Y') selected="selected" @endif>
-                                                            Jan 1,2015</option>
-                                                        <option value="d-m-Y"
+                                                            Jan 1,2023</option>
+                                                        <option value="d/m/Y"
                                                             @if (@$settings['site_date_format'] == 'd-m-Y') selected="selected" @endif>
-                                                            d-m-y</option>
+                                                            d/m/y</option>
                                                         <option value="m-d-Y"
                                                             @if (@$settings['site_date_format'] == 'm-d-Y') selected="selected" @endif>
-                                                            m-d-y</option>
+                                                            m/d/y</option>
                                                         <option value="Y-m-d"
                                                             @if (@$settings['site_date_format'] == 'Y-m-d') selected="selected" @endif>
-                                                            y-m-d</option>
+                                                            y/m/d</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -2154,7 +2154,7 @@
                                                             10:30 pm</option>
                                                         <option value="H:i"
                                                             @if (@$settings['site_time_format'] == 'H:i') selected="selected" @endif>
-                                                            22:30</option>
+                                                            22:30 Hours</option>
                                                     </select>
                                                 </div>
 
