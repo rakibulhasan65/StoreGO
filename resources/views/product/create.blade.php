@@ -329,10 +329,10 @@
                                                             </span>
                                                         @enderror
                                                     </div>
-                                                </div> 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -368,9 +368,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <h5>{{ __('Product Image') }}</h5>
                     <div class="card shadow-none border">
@@ -395,18 +395,18 @@
                                     <ul class="dz-preview dz-preview-multiple list-group list-group-lg list-group-flush">
                                         <li class="list-group-item px-0">
                                             <div class="row align-items-center">
-                                                <div class="col-auto">
+                                                <div class="col-12">
                                                     <div class="avatar">
                                                         <img class="rounded" src="" alt="Image placeholder"
                                                             data-dz-thumbnail>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <h6 class="text-sm mb-1" data-dz-name>...</h6>
+                                                <div class="col-12">
+                                                    <h6 class="text-sm mb-1 mt-3" data-dz-name>...</h6>
                                                     <p class="small text-muted mb-0" data-dz-size>
                                                     </p>
                                                 </div>
-                                                <div class="col-auto">
+                                                <div class="col-12">
                                                     <a href="#" class="dropdown-item" data-dz-remove>
                                                         <i class="fas fa-trash-alt"></i>
                                                     </a>
@@ -443,7 +443,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
         {{ Form::close() }}

@@ -61,7 +61,7 @@ class Store extends Model
         'paypal_client_id',
         'paypal_secret_key',
         'bkash_app_key',
-        'bkash_secret_key',
+        'bkash_app_secret',
         'bkash_username',
         'bkash_password',
         'is_bkash_enabled',

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-title')
-    {{ __('Product') }}
+    {{ __('Roles') }}
 @endsection
 @section('title')
     <div class="d-inline-block">

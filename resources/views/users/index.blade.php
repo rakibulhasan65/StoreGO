@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-title')
-    {{ __('Product') }}
+    {{ __('users') }}
 @endsection
 @php
 $profile=\App\Models\Utility::get_file('uploads/profile/');

@@ -60,7 +60,7 @@ class CreateStoresTable extends Migration
             $table->text('paypal_client_id')->nullable();
             $table->text('paypal_secret_key')->nullable();
             $this->text('bkash_app_key')->nullable();
-            $this->text('bkash_secret_key')->nullable();
+            $this->text('bkash_app_secret')->nullable();
             $this->text('bkash_username')->nullable();
             $this->string('bkash_password')->nullable();
             $table->string('is_bkash_enabled')->default('off');

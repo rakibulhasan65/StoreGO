@@ -561,7 +561,7 @@ class SettingController extends Controller
                 'PAYPAL_CLIENT_ID' => $request->paypal_client_id,
                 'PAYPAL_SECRET_KEY' => $request->paypal_secret_key,
                 'BKASH_APP_KEY' => $request->bkash_app_key,
-                'BKASH_APP_SECRET' => $request->bkash_secret_key,
+                'BKASH_APP_SECRET' => $request->bkash_app_secret,
                 'BKASH_USERNAME' => $request->bkash_username,
                 'BKASH_PASSWORD' => $request->bkash_password,
                 'ENABLE_BKASH' => $request->enable_bkash ?? 'off',
@@ -632,7 +632,7 @@ class SettingController extends Controller
             $request->validate(
                 [
                     'bkash_app_key' => 'required|string',
-                    'bkash_secret_key' => 'required|string',
+                    'bkash_app_secret' => 'required|string',
                     'bkash_username' => 'required|string',
                     'bkash_password' =>'required|string',
                 ]
@@ -652,7 +652,7 @@ class SettingController extends Controller
         $store['PAYPAL_SECRET_KEY'] = $request->paypal_secret_key;
         $store['ENABLE_WHATSAPP'] = $request->enable_whatsapp ?? 'off';
         $store['BKASH_APP_KEY'] = $request->bkash_app_key;
-        $store['BKASH_APP_SECRET'] = $request->bkash_secret_key;
+        $store['BKASH_APP_SECRET'] = $request->bkash_app_secret;
         $store['BKASH_USERNAME'] = $request->bkash_username;
         $store['BKASH_PASSWORD'] = $request->bkash_password;
         $store['is_bkash_enabled'] = $request->is_bkash_enabled ?? 'off';
@@ -929,14 +929,14 @@ class SettingController extends Controller
             $request->validate(
                 [
                     'bkash_app_key' => 'required|string',
-                    'bkash_secret_key' => 'required|string',
+                    'bkash_app_secret' => 'required|string',
                     'bkash_username' => 'required|string',
                     'bkash_password' =>'required|string',
                 ]
             );
             $post['is_bkash_enabled'] = $request->is_bkash_enabled;
             $post['bkash_app_key'] = $request->bkash_app_key;
-            $post['bkash_secret_key'] = $request->bkash_secret_key;
+            $post['bkash_app_secret'] = $request->bkash_app_secret;
             $post['bkash_username'] = $request->bkash_username;
             $post['bkash_password'] = $request->bkash_password;
         } else {
@@ -1172,14 +1172,14 @@ class SettingController extends Controller
             $request->validate(
                 [
                     'bkash_app_key' => 'required|string',
-                    'bkash_secret_key' => 'required|string',
+                    'bkash_app_secret' => 'required|string',
                     'bkash_username' => 'required|string',
                     'bkash_password' =>'required|string',
                 ]
             );
             $post['is_bkash_enabled'] = $request->is_bkash_enabled;
             $post['bkash_app_key'] = $request->bkash_app_key;
-            $post['bkash_secret_key'] = $request->bkash_secret_key;
+            $post['bkash_app_secret'] = $request->bkash_app_secret;
             $post['bkash_username'] = $request->bkash_username;
             $post['bkash_password'] = $request->bkash_password;
         } else {

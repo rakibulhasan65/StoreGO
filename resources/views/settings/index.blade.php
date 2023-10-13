@@ -790,12 +790,12 @@
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="form-group">
-                                                                            <label for="bkash_secret_key" class="col-form-label">{{ __('BKash Secret Key') }}</label>
-                                                                            <input type="text" name="bkash_secret_key"
-                                                                                id="bkash_secret_key"
+                                                                            <label for="bkash_app_secret" class="col-form-label">{{ __('BKash App Secret') }}</label>
+                                                                            <input type="text" name="bkash_app_secret"
+                                                                                id="bkash_app_secret"
                                                                                 class="form-control"
-                                                                                value="{{ !isset($admin_payment_setting['bkash_secret_key']) || is_null($admin_payment_setting['bkash_secret_key']) ? '' : $admin_payment_setting['bkash_secret_key'] }}"
-                                                                                placeholder="{{ __('BKash Secret Key') }}">
+                                                                                value="{{ !isset($admin_payment_setting['bkash_app_secret']) || is_null($admin_payment_setting['bkash_app_secret']) ? '' : $admin_payment_setting['bkash_app_secret'] }}"
+                                                                                placeholder="{{ __('BKash App Secret') }}">
 
                                                                             <label for="bkash_password" class="col-form-label">{{ __('BKash Password') }}</label>
                                                                             <input type="password" name="bkash_password"
